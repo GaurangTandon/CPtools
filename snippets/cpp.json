@@ -1,0 +1,98 @@
+{
+    // Place your snippets for cpp here. Each snippet is defined under a snippet name and has a prefix, body and
+    // description. The prefix is what is used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
+    // $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. Placeholders with the
+    // same ids are connected.
+    // Example:
+    // "Print to console": {
+    // 	"prefix": "log",
+    // 	"body": [
+    // 		"console.log('$1');",
+    // 		"$2"
+    // 	],
+    // 	"description": "Log output to console"
+    //
+    "Default contents of C++ file": {
+        "prefix": "cppdefault",
+        "body": [
+            "#include <iostream>",
+            "// #include <algorithm>",
+            "// #include <iomanip>",
+            "// #include <fstream>",
+            "// #include <vector>",
+            "// #include <deque>",
+            "// #include <string>",
+            "// #include <cmath>",
+            "// #include <map>",
+            "// #include <unordered_map>",
+            "// #include <utility>",
+            "// #include <set>",
+            "// #include <unordered_set>",
+            "// #include <ctime>",
+            "// #include <queue>",
+            "// #include <stack>",
+            "// #include <bitset>",
+            "// #include <random>",
+            "// #include <cstring>",
+            "// #include <cassert>",
+            "// #include <complex>",
+            "using namespace std;",
+            "typedef unsigned long long int llu;",
+            "typedef long long int ll;",
+            "#define vi vector<int>",
+            "",
+            "// for IO of numbers use cin and cout",
+            "",
+            "void yes() {",
+            "    cout << \"YES\\n\";",
+            "}",
+
+            "",
+            "void no() {",
+            "    cout << \"NO\\n\";",
+            "}",
+            "",
+            "void yesno(int f){",
+            "    if(f) yes(); else no();",
+            "}",
+            "void ga(ll** arr, ll n){",
+            "    *arr = (ll *) calloc(sizeof (ll), n);",
+            "    for(ll i = 0; i < n; i++){",
+            "        scanf(\"%lld\", *arr + i);",
+            "    }",
+            "}",
+            "",
+            "void pa(ll* arr, ll n){",
+            "    for(ll i = 0; i < n; i++){",
+            "        printf(\"%lld \", *(arr + i));",
+            "    }",
+            "}",
+            "",
+            "int main(void){",
+            "    ios::sync_with_stdio(0); cin.tie(0);",
+            "    ${0:// code}",
+            "    return 0;",
+            "}"
+        ],
+        "description": "Default contents of a C++ file"
+    },
+    // size_t when compared with int gives incorrect results
+    "non size_t loop": {
+        "prefix": "for",
+        "body": [
+            "for(int ${1:i} = ${3:0}; $1 < ${2:len}; $1++){",
+            "    ${0:// code}",
+            "}"
+        ],
+        "description": "Default contents of a C file"
+    },
+    "non size_t reverse loop": {
+        "prefix": "forr",
+        "body": [
+            "for(int ${1:i} = ${2:len} - 1; $1 >= ${3:0}; $1--){",
+            "    ${0:// code}",
+            "}"
+        ],
+        "description": "Default contents of a C file"
+    }
+}
