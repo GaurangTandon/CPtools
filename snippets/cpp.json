@@ -15,6 +15,8 @@
     "Default contents of C++ file": {
         "prefix": "cppdefault",
         "body": [
+            "#include <stdio.h>",
+            "#include <math.h>",
             "#include <iostream>",
             "// #include <algorithm>",
             "// #include <iomanip>",
@@ -42,19 +44,6 @@
             "#define vi vector<int>",
             "",
             "// for IO of numbers use cin and cout",
-            "",
-            "void yes() {",
-            "    cout << \"YES\\n\";",
-            "}",
-
-            "",
-            "void no() {",
-            "    cout << \"NO\\n\";",
-            "}",
-            "",
-            "void yesno(int f){",
-            "    if(f) yes(); else no();",
-            "}",
             "void ga(ll** arr, ll n){",
             "    *arr = (ll *) calloc(sizeof (ll), n);",
             "    for(ll i = 0; i < n; i++){",
@@ -69,7 +58,7 @@
             "}",
             "",
             "int main(void){",
-            "    ios::sync_with_stdio(0); cin.tie(0);",
+            "    ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);",
             "    ${0:// code}",
             "    return 0;",
             "}"
@@ -94,5 +83,23 @@
             "}"
         ],
         "description": "Default contents of a C file"
+    },
+    "yes_no": {
+        "prefix": "yesno",
+        "body": [
+            "void yes() {",
+            "    cout << \"YES\\n\";",
+            "}",
+
+            "",
+            "void no() {",
+            "    cout << \"NO\\n\";",
+            "}",
+            "",
+            "void yesno(int f){",
+            "    if(f) yes(); else no();",
+            "}"
+        ],
+        "description": "common yes no queries on cf"
     }
 }
