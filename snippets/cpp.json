@@ -101,5 +101,33 @@
             "}"
         ],
         "description": "common yes no queries on cf"
+    },
+    "sieve": {
+        "prefix": "sieve",
+        "body": [
+            "llu ${1:sieve}[${2:size}];",
+            "",
+            "void consieve(){",
+            "    for(llu i = 2; i < $2; i++){",
+            "         $2[i] = i;",
+            "    }",
+            "    for(llu i = 2; i < $2; i++){",
+            "        if($2[i] == i){",
+            "            for(llu j = i * 2; j < $2 && j > 0; j += i){",
+            "                // uncomment below line if you wish to store smallest prime factor",
+            "                ${3:f($2[j] == j)}",
+            "                    $2[j] = i;",
+            "            }",
+            "        }",
+            "    }",
+            "}",
+            "$0"
+        ],
+        "description": "generates a sieve in a global array, each element stores largest prime factor of that number"
+    },
+    "boolean sieve": {
+        "prefix": "boolsieve",
+        "body": [""],
+        "description": "generates a sieve in a global array"
     }
 }
