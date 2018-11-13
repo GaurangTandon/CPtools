@@ -2,9 +2,13 @@
 
 Tips are separated by categories
 
-## General
+## General code guidelines
 
 1. Adding several `#include` statements to your code, or that innocent `#include<bits/stdc++.h>` can scale your code's compilation time to upto 2-3 seconds, which matter a lot in quickly solving A or B problems. So, include only those libraries which are necesary.
+
+## General algo guidelines
+
+1.  The recursion stack is limited to around 350,000 on an average machine. This solution won't TLE, but will give a memory limit exceeded error. You'll get an error similar to `SIGSEGV: Invalid memory reference`. In general, avoid using recursion for such large cases, use iteration instead.
 
 ## Sieve
 
