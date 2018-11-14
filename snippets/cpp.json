@@ -42,8 +42,11 @@
             "typedef unsigned long long int llu;",
             "typedef long long int ll;",
             "#define vi vector<int>",
+            // inbuilt max and min functions in C++ don't work for
+            // unsigned long long :/
+            "#define ma(x, y) (x > y ? x : y)",
+            "#define mi(x, y) (x < y ? x : y)",
             "",
-            "// for IO of numbers use cin and cout",
             "void ga(ll** arr, ll n){",
             "    *arr = (ll *) calloc(sizeof (ll), n);",
             "    for(ll i = 0; i < n; i++){",
@@ -107,15 +110,15 @@
         "body": [
             "llu ${1:sieve}[${2:size}];",
             "",
-            "void consieve(){",
+            "void con(){",
             "    for(llu i = 2; i < $2; i++){",
             "         $2[i] = i;",
             "    }",
             "    for(llu i = 2; i < $2; i++){",
             "        if($2[i] == i){",
             "            for(llu j = i * 2; j < $2 && j > 0; j += i){",
-            "                // uncomment below line if you wish to store smallest prime factor",
-            "                ${3:f($2[j] == j)}",
+            "                // retain below line if you wish to store smallest prime factor",
+            "                ${3:if($2[j] == j)}",
             "                    $2[j] = i;",
             "            }",
             "        }",
@@ -128,6 +131,22 @@
     "boolean sieve": {
         "prefix": "boolsieve",
         "body": [""],
-        "description": "generates a sieve in a global array"
+        "description": "generates a boolean sieve in a global array"
+    },
+    "scanf": {
+        "prefix": "sc",
+        "body": "scanf(\"${1:%llu}\", ${0:&n});"
+    },
+    "printf": {
+        "prefix": "pf",
+        "body": "printf(\"${1:%llu}\", ${0:n});"
+    },
+    "cin": {
+        "prefix": "cin",
+        "body": "cin >> $1;"
+    },
+    "cout": {
+        "prefix": "cout",
+        "body": "cout << $1 << endl;"
     }
 }
