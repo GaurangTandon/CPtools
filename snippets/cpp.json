@@ -12,18 +12,27 @@
     // 	],
     // 	"description": "Log output to console"
     //
+    // don't keep prefix  name similar to variable names or function names
+    // as then typing the variable names brings up suggestions for snippets
     "Default contents of C++ file": {
         "prefix": "cppdefault",
         "body": [
+            // for io
             "#include <stdio.h>",
+            // for sqrt and all
             "#include <math.h>",
+            // for sorting and others
+            "#include <algorithm>",
+            // for basic linear,  2d, etc. data
+            "#include <vector>",
+            // don't mix cin/cout with sf/pf, causes problems :(
+            // either use this or that but not both at once
             "#include <iostream>",
-            "// #include <algorithm>",
+            // for simple string operations
+            "#include <string>",
             "// #include <iomanip>",
             "// #include <fstream>",
-            "// #include <vector>",
             "// #include <deque>",
-            "// #include <string>",
             "// #include <cmath>",
             "// #include <map>",
             "// #include <unordered_map>",
@@ -39,24 +48,87 @@
             "// #include <cassert>",
             "// #include <complex>",
             "using namespace std;",
-            "typedef unsigned long long int llu;",
+            "typedef unsigned long long int lu;",
             "typedef long long int ll;",
-            "#define vi vector<int>",
+            "typedef long double ld;",
+            // prefer to use the first definition
+            "#define v vector<ll>",
+            "#define vu vector<lu>",
+            "#define vs vector<string>",
+            "const lu MOD = 1000000007;",
             // inbuilt max and min functions in C++ don't work for
             // unsigned long long :/
             "#define ma(x, y) (x > y ? x : y)",
             "#define mi(x, y) (x < y ? x : y)",
+            // convenient method to ceil x/y
+            // no need to cast into long double and
+            // then call ceil, then cast  back into int
+            // x,y must be ints though
+            "#define ce(x, y) ((x+y-1)/y)",
             "",
-            "void ga(ll** arr, ll n){",
-            "    *arr = (ll *) calloc(sizeof (ll), n);",
+            // proposed not working implementation
+            // yet to figure out what to do with varying types
+            // "template <typename T, typename A>",
+            // "vector<T> ga(lu n){",
+            // "    T a;",
+            // "    for(lu i = 0; i < n; i++){",
+            // "        T p;",
+            // "        // scanf(\"%lld\", &p);",
+            // "        cin >> p;",
+            // "        a.push_back(p);",
+            // "    }",
+            // "    return a;",
+            // "}",
+            "v ga(ll n){",
+            "    v a;",
             "    for(ll i = 0; i < n; i++){",
-            "        scanf(\"%lld\", *arr + i);",
+            "        ll p;",
+            "        // scanf(\"%lld\", &p);",
+            "        cin >> p;",
+            "        a.push_back(p);",
             "    }",
+            "    return a;",
             "}",
             "",
-            "void pa(ll* arr, ll n){",
-            "    for(ll i = 0; i < n; i++){",
-            "        printf(\"%lld \", *(arr + i));",
+            "vu gau(lu n){",
+            "    vu a;",
+            "    for(lu i = 0; i < n; i++){",
+            "        lu p;",
+            "        // scanf(\"%llu\", &p);",
+            "        cin >> p;",
+            "        a.push_back(p);",
+            "    }",
+            "    return a;",
+            "}",
+            "vs gas(lu n){",
+            "    vs a;",
+            "    for(lu i = 0; i < n; i++){",
+            "        string p;",
+            "        // scanf(\"%llu\", &p);",
+            "        cin >> p;",
+            "        a.push_back(p);",
+            "    }",
+            "    return a;",
+            "}",
+            "",
+            // use template functions instead of overloading here ;)
+            // "void pa(v a){",
+            // "    for(ll p : a){",
+            // "        // printf(\"%lld \", a[i]);",
+            // "        cout << p << \" \";",
+            // "    }",
+            // "}",
+            // "void pa(vu a){",
+            // "    for(lu p : a){",
+            // "        // printf(\"%llu \", a[i]);",
+            // "        cout << p << \" \";",
+            // "    }",
+            // "}",
+            "template <typename T, typename A>",
+            "void pa(vector<T, A> const &a){",
+            "    for(T p : a){",
+            "        // printf(\"%llu \", a[i]);",
+            "        cout << p << \" \";",
             "    }",
             "}",
             "",
@@ -70,18 +142,18 @@
     },
     // size_t when compared with int gives incorrect results
     "non size_t loop": {
-        "prefix": "for",
+        "prefix": "ff",
         "body": [
-            "for(int ${1:i} = ${3:0}; $1 < ${2:len}; $1++){",
+            "for(${1:ll} ${2:i} = ${3:0}; $2 < ${4:len}; $2++){",
             "    ${0:// code}",
             "}"
         ],
         "description": "Default contents of a C file"
     },
     "non size_t reverse loop": {
-        "prefix": "forr",
+        "prefix": "fr",
         "body": [
-            "for(int ${1:i} = ${2:len} - 1; $1 >= ${3:0}; $1--){",
+            "for(${1:ll} ${2:i} = ${3:len} - 1; $2 >= ${4:0}; $2--){",
             "    ${0:// code}",
             "}"
         ],
@@ -105,21 +177,32 @@
         ],
         "description": "common yes no queries on cf"
     },
-    "sieve": {
-        "prefix": "sieve",
+    "tests": {
+        "prefix": "tests",
         "body": [
-            "llu ${1:sieve}[${2:size}];",
+            "ll t;",
+            "scanf(\"%lld\", &t);",
+            "while(t--){",
+            "    // ${0:code}",
+            "}"
+        ]
+    },
+    "primes related methods": {
+        "prefix": "prfunctions",
+        "body": [
+            "llu ${1:sieve}[${2:size}]; vu primes;",
             "",
             "void con(){",
             "    for(llu i = 2; i < $2; i++){",
-            "         $2[i] = i;",
+            "         $1[i] = i;",
             "    }",
             "    for(llu i = 2; i < $2; i++){",
-            "        if($2[i] == i){",
+            "        if($1[i] == i){",
+            "            primes.push_back(i);",
             "            for(llu j = i * 2; j < $2 && j > 0; j += i){",
             "                // retain below line if you wish to store smallest prime factor",
-            "                ${3:if($2[j] == j)}",
-            "                    $2[j] = i;",
+            "                ${3:if($1[j] == j)}",
+            "                    $1[j] = i;",
             "            }",
             "        }",
             "    }",
@@ -134,7 +217,7 @@
         "description": "generates a boolean sieve in a global array"
     },
     "scanf": {
-        "prefix": "sc",
+        "prefix": "sf",
         "body": "scanf(\"${1:%llu}\", ${0:&n});"
     },
     "printf": {
@@ -142,11 +225,145 @@
         "body": "printf(\"${1:%llu}\", ${0:n});"
     },
     "cin": {
-        "prefix": "cin",
+        "prefix": "ci",
         "body": "cin >> $1;"
     },
     "cout": {
-        "prefix": "cout",
+        "prefix": "co",
         "body": "cout << $1 << endl;"
+    },
+    "ignore spaces/newlines after int input": {
+        "prefix": "ignore",
+        "body": "cin.ignore(256, '\n');"
+    },
+    "cumsum": {
+        "prefix": "cumsum",
+        "body": [
+            "${1:v} sum(${3:n});",
+            "sum.push_back(${2:a}[0]);",
+            "for(ll i = 1; i < ${3}; i++){",
+            "    sum[i] = sum[i - 1] + ${2}[i];",
+            "}"
+        ],
+        "description": "generate simple prefix sum array for given integers"
+    },
+    "check if power of n": {
+        "prefix": "powerofn",
+        "body": [""]
+    },
+
+    "powersOfN": {
+        "prefix": "powers",
+        "body": [
+            "// 2^35 is roughly 10^11",
+            "const ll ${1:lim}=${2:35};",
+            "vllu powers(${1});",
+            "// rest of this code goes into main, above is global",
+            "powers.push_back(1);",
+            "for(ll i = 1; i < ${1}; i++){",
+            "    powers[i] = powers[i - 1] * 2;",
+            "}"
+        ]
+    },
+    "powerfunc": {
+        "prefix": "power",
+        "description": "two functions for x^y and x^y%mod",
+        "body": [
+            // avoid clash with pow inbuilt function
+            "llu po(llu base, llu exp)",
+            "{",
+            "    llu result = 1;",
+            "    for (;;)",
+            "    {",
+            "        if (exp & 1)",
+            "            result *= base;",
+            "        exp >>= 1;",
+            "        if (!exp)",
+            "            break;",
+            "        base *= base;",
+            "    }",
+            "",
+            "    return result;",
+            "}",
+            "",
+            "llu pomod(llu x, llu y, llu mod)",
+            "{",
+            "    llu res = 1;",
+            "    x = x % mod;",
+            "",
+            "    while (y > 0)",
+            "    {",
+            "        if (y & 1)",
+            "            res = (res*x) % mod;",
+            "        y = y >> 1;",
+            "        x = (x * x) % mod;",
+            "    }",
+            "    return res;",
+            "}"
+        ]
+    },
+    "multiplication mod": {
+        "prefix": "multmod",
+        "body": [
+            "${1:lu} multmod($1 a, $1 b, $1 mod){",
+            "    if(a == 0 || b == 0) return 0;",
+            "    if(b == 1) return a;",
+            "    if(b & 1) return a + 2 * multmod(a, b / 2, mod);",
+            "    else return 2 * multmod(a, b / 2, mod);",
+            "}"
+        ]
+    },
+    "methods related to factors of a number": {
+        "prefix": "frmethods",
+        "body": [
+            // O(root N) algo to generate all factors of N
+            // in ascending order
+            "vu getFactors(lu a){",
+            "    vu v1, v2;",
+            "    for(lu i = 1, sq = (lu) sqrt(a); i <= sq; i++){",
+            "        if(a % i == 0){",
+            "            lu k = a / i;",
+            "            if(i == k){",
+            "                v1.push_back(i);",
+            "            } else {",
+            "                v1.push_back(i);",
+            "                v2.push_back(k);",
+            "            }",
+            "        }",
+            "    }",
+            "    v1.insert(v1.end(), v2.rbegin(), v2.rend());",
+            "    return v1;",
+            "}",
+            "",
+            "lu countFactors(lu a){",
+            "    // prerequisite is sieve array of all primes",
+            "    lu c = 1, c2;",
+            "    while(a != 1){",
+            "        lu p = sieve[a];",
+            "        c2 = 0;",
+            "        while(p == sieve[a]){",
+            "            c2++;",
+            "            a /= p;",
+            "        }",
+            "        c *= (c2 + 1);",
+            "    }",
+            "    return c;",
+            "}"
+        ]
+    },
+    "rotation methods": {
+        "body": [
+            "// rotate segment of vector from a to b (inclusive) in dir",
+            "// k times",
+            "// dir = 0 left, dir = 1 right",
+            // this is a neat wrapper over the underlying complicated rotate
+            // STL method (requires <algorithm>)
+            "void rot(vu &a, lu b, lu e, lu k = 1, int dir = 0){",
+            "    k %= (e - b + 1);",
+            "    if(dir) k = (e - b + 1) - k;    ",
+            "    rotate(a.begin() + b, a.begin() + b + k, a.end() - (a.size() - e) + 1);",
+            "}"
+        ],
+        "prefix": "rotmethods"
     }
 }
