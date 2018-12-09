@@ -8,6 +8,19 @@ Tips are separated by categories
 
 2. Be good at coming up with self test cases. Just because your code passes the pretests doesn't mean it will pass the system tests.
 
+3. **Hightail**: is a program that scrapes and downloads sample test cases from a problem/contest, and then can run your executable against that problem. Use it to quickly determine if your program passes the given inputs.
+
+4. **Checking interactive problems**: is tricky. For C++, you can however achieve that as follows.
+
+    1. You first need to write both a `solution.cpp` and then a `grader.cpp` that verifies if the solution is correct.
+    2. Then, execute the compiled executables like so:
+
+        mkfifo myfifo
+        ./grader < myfifo | ./solution > myfifo
+
+        `mkfifo` creates a named fifo (`myfifo` in this case) which we can use for queuing the output of `solution` into the `grader`. One small problem is that you cannot view the contents of `myfifo` unless you close the output connection, which I do not know how to.  
+        So, you can simply write the output to a separate file via an `ofstream` (use `sol.txt` for one and `grad.txt` for another)
+
 ## Hacking
 
 1. Only get down to hack problems once you have actually read all problems in the contest and made sure that you cannot solve them. In general, for div 2 problems, all problems without trees can be solved pretty easily.
@@ -15,13 +28,47 @@ Tips are separated by categories
 2. Attempt to hack those solutions which took less than five minutes to accepted. In general, they have a silly logic mistake that enables them to submit faster but incorrectly.
    Example: [this hacked solution](https://codeforces.com/contest/1062/hacks/502444/) was submitted in two minutes.
 
+## Compilation
+
+Use the `-O2` flag for compilation by default. It takes more time to compile but it enables several optimizations. Since you don't get the command line for yourself, you can use pragma directives. The lines to stick at the top are:
+
+    #pragma comment(linker, "/stack:200000000")
+    #pragma GCC optimize ("Ofast")
+    #pragma GCC target ("sse,sse2,sse3,ssse3,sse4,popcnt,abm,mmx,avx,tune=native")
+
+Read more compilation options on [this page](https://gcc.gnu.org/onlinedocs/gcc/Optimize-Options.html#index-Ofast).
+
+How do the first and last line actually work?
+
+Interestingly, codeforces.com [already compiles](https://codeforces.com/blog/entry/79) the files with `-O2` flag.
+
 ## General coding
 
-1. Adding several `#include` statements to your code, or that innocent `#include<bits/stdc++.h>` can scale your code's compilation time to upto 2-3 seconds, which matter a lot in quickly solving A or B problems. So, include only those libraries which are necesary, commment out the rest.
-2. Decide upon some standard variable names. Like, `a` for arrays, prefix sum array as `sum`, `s` for strings, etc. Avoid longer names. At max, competitive code has only six distinct variables in any scope, so there can't/shouldn't be much confusion.
-3. Use vectors if you're using C++. There's no reason to not use vectors when they are available. They are not only [as fast as plain arrays](https://stackoverflow.com/questions/26189531/how-is-stdvector-faster-than-a-plain-array), but are also dynamically sized with constant access time. They also allow sorting operations, any index insertion/deletion, etc. on them.
-4. Avoid `int`s in your code. There's no reason to use `int`s when `long long int` are available, which do the same task and also avoid the occassional overflow problem that you might forget to take care of.
-5. Use as many keybindings, snippets, etc. as you can during the contest. Make your text editor your own.
+1.  Adding several `#include` statements to your code, or that innocent `#include<bits/stdc++.h>` can scale your code's compilation time to upto 2-3 seconds, which matter a lot in quickly solving A or B problems. So, include only those libraries which are necesary, commment out the rest.
+2.  Decide upon some standard variable names. Like, `a` for arrays, prefix sum array as `sum`, `s` for strings, etc. Avoid longer names. At max, competitive code has only six distinct variables in any scope, so there can't/shouldn't be much confusion.
+3.  Use vectors if you're using C++. There's no reason to not use vectors when they are available. They are not only [as fast as plain arrays](https://stackoverflow.com/questions/26189531/how-is-stdvector-faster-than-a-plain-array), but are also dynamically sized with constant access time. They also allow sorting operations, any index insertion/deletion, etc. on them.
+4.  Avoid `int`s in your code. There's no reason to use `int`s when `long long int` are available, which do the same task and also avoid the occassional overflow problem that you might forget to take care of.
+5.  Use as many keybindings, snippets, etc. as you can during the contest. Make your text editor your own.
+6.  It is recommended to avoid writing functions that return more than one value, as it leads to harder debugging. However, this may sometimes be desirable, for example to return index of first occurrence of string that begins with "a", and the string itself. So, you can use `std::tie` and `std::tuple` for that.
+
+        tuple<int, string> f(params) {
+            // do some searching
+            return {index, str};
+        }
+
+        int main(void) {
+            int idx; string found;
+            tie(idx, found) = f(params);
+        }
+
+7.  **Use of auto-keyword:** Instead of `set<pair<int, pair<int, int> > >::iterator` you can simply do `auto it = s.begin()`
+8.  To exclude some code from executing in online judge (C++), you can use this:
+
+        #ifndef ONLINE_JUDGE
+        //code that should not execute in ONLINE JUDGE
+        #else
+        //code that should execute in ONLINE JUDGE
+        #endif
 
 ## IO
 
@@ -32,17 +79,26 @@ Tips are separated by categories
 ## Using vectors
 
 1. Make sure your index variable - with which you are looping over a vector - is bounded till the size of the vector. C++ fails without any warning in case of that, gives undefined behavior.
+2. Use `emplace_back` instead of `push_back` for [marked performance improvement](https://stackoverflow.com/questions/26860749/efficiency-of-c11-push-back-with-stdmove-versus-emplace-back-for-already). The bug (mainly typesafety) involved with emplace_back is not our concern in CP ([post](https://stackoverflow.com/questions/10890653/why-would-i-ever-use-push-back-instead-of-emplace-back/28435599)).
 
 ## General algo
 
 1. **Stackoverflow**: The recursion stack is limited to around 350,000 on an average machine. This solution won't TLE, but will give a memory limit exceeded error. You'll get an error similar to `SIGSEGV: Invalid memory reference`, and in gdb, you will get the line number as the start of the method header. In general, avoid using recursion for such large cases, use iteration instead.
+
+## Bit manipulation
+
+1. `1 << x` can overflow if `x` is greater than 31. Use `1ll << 31` instead.
 
 ## Sieve
 
 1. Do not create a sieve unless you want to check the primality of a number more than once. Besides that, decide at all if you actually require the number to be prime in your code.
    Refer to [bad solution](https://codeforces.com/contest/1076/submission/45601999), [best solution](https://codeforces.com/contest/1076/submission/45626302)
 
+## Codechef
+
+1. When you receive an invalid answer output from an interactive problem, you should immediately terminate your program to receive a Wrong Answer verdict; otherwise, you may receive any verdict.
+2. Don't forget to flush the output after printing each line!
+
 # TODO:
 
-1. automated web scraper for downloading the test cases and diffing them with expected output on F8 press. Progress: found `hightail`, but it's not recognizing the jar file on ubuntu for now.
-2. Create snippet for cumulative sum of 2d array,
+1. Create snippet for cumulative sum of 2d array,

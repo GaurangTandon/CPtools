@@ -17,6 +17,7 @@
     "Default contents of C++ file": {
         "prefix": "cppdefault",
         "body": [
+            "#pragma GCC optimize \"O2\"", //Force GCC to enable O2 optimization
             // for io
             "#include <stdio.h>",
             // for sqrt and all
@@ -30,6 +31,8 @@
             "#include <iostream>",
             // for simple string operations
             "#include <string>",
+            "// for iota, accumulate, partial_sum",
+            "// #include <numeric>",
             "// #include <iomanip>",
             "// #include <fstream>",
             "// #include <deque>",
@@ -54,31 +57,26 @@
             // prefer to use the first definition
             "#define v vector<ll>",
             "#define vu vector<lu>",
+            "#define vld vector<ld>",
             "#define vs vector<string>",
             "const lu MOD = 1000000007;",
-            // inbuilt max and min functions in C++ don't work for
-            // unsigned long long :/
-            "#define ma(x, y) (x > y ? x : y)",
-            "#define mi(x, y) (x < y ? x : y)",
+            "const ld PI = 2 * acos(0.0);",
             // convenient method to ceil x/y
             // no need to cast into long double and
             // then call ceil, then cast  back into int
             // x,y must be ints though
+            "#define round(x, y) ((x+y-1)/y)",
             "#define ce(x, y) ((x+y-1)/y)",
+            "#define amax(x, y) if(y > x) x = y;",
+            "#define amin(x, y) if(y < x) x = y;",
+            "#define str(x) to_string(x)",
             "",
-            // proposed not working implementation
-            // yet to figure out what to do with varying types
-            // "template <typename T, typename A>",
-            // "vector<T> ga(lu n){",
-            // "    T a;",
-            // "    for(lu i = 0; i < n; i++){",
-            // "        T p;",
-            // "        // scanf(\"%lld\", &p);",
-            // "        cin >> p;",
-            // "        a.push_back(p);",
-            // "    }",
-            // "    return a;",
-            // "}",
+            // so we can easily do sort(whole(x))
+            // instead of sort(x.begin(), x.end())
+            "#define all(x) x.begin(), x.end()",
+            // for string to primitive conversions, use
+            // stold, stod, stof, stoi, stol, stoll, stoul, stoull
+            "",
             "v ga(ll n){",
             "    v a;",
             "    for(ll i = 0; i < n; i++){",
@@ -87,7 +85,7 @@
             "        cin >> p;",
             "        a.push_back(p);",
             "    }",
-            "    return a;",
+            "    return move(a);",
             "}",
             "",
             "vu gau(lu n){",
@@ -98,7 +96,7 @@
             "        cin >> p;",
             "        a.push_back(p);",
             "    }",
-            "    return a;",
+            "    return move(a);",
             "}",
             "vs gas(lu n){",
             "    vs a;",
@@ -108,7 +106,7 @@
             "        cin >> p;",
             "        a.push_back(p);",
             "    }",
-            "    return a;",
+            "    return move(a);",
             "}",
             "",
             // use template functions instead of overloading here ;)
@@ -130,6 +128,7 @@
             "        // printf(\"%llu \", a[i]);",
             "        cout << p << \" \";",
             "    }",
+            "    cout << '\\n';",
             "}",
             "",
             "int main(void){",
@@ -143,20 +142,12 @@
     // size_t when compared with int gives incorrect results
     "non size_t loop": {
         "prefix": "ff",
-        "body": [
-            "for(${1:ll} ${2:i} = ${3:0}; $2 < ${4:len}; $2++){",
-            "    ${0:// code}",
-            "}"
-        ],
+        "body": ["for(${1:ll} ${2:i} = ${3:0}; $2 < ${4:len}; $2++){", "    ${0:// code}", "}"],
         "description": "Default contents of a C file"
     },
     "non size_t reverse loop": {
         "prefix": "fr",
-        "body": [
-            "for(${1:ll} ${2:i} = ${3:len} - 1; $2 >= ${4:0}; $2--){",
-            "    ${0:// code}",
-            "}"
-        ],
+        "body": ["for(${1:ll} ${2:i} = ${3:len} - 1; $2 >= ${4:0}; $2--){", "    ${0:// code}", "}"],
         "description": "Default contents of a C file"
     },
     "yes_no": {
@@ -177,15 +168,53 @@
         ],
         "description": "common yes no queries on cf"
     },
-    "tests": {
-        "prefix": "tests",
+    "ceil and floor search": {
+        "prefix": "ceflmethods",
         "body": [
-            "ll t;",
-            "scanf(\"%lld\", &t);",
-            "while(t--){",
-            "    // ${0:code}",
+            "template<typename T>",
+            "ll ceilSearch(const vector<T> &a, T n, ll s, ll e)",
+            "{",
+            "    if (s > e)",
+            "        return -1;",
+            "    if (a[s] >= n)",
+            "        return s;",
+            "    if (a[e] < n)",
+            "        return -1;",
+            "",
+            "    ll m = (s + e) / 2, s;",
+            "",
+            "    if (a[m] >= n)",
+            "    {",
+            "        s = ceilSearch(a, n, s, m - 1);",
+            "        return s == -1 ? m : s;",
+            "    }",
+            "    else",
+            "        return ceilSearch(a, n, m + 1, e);",
             "}"
         ]
+    },
+    "Array functions": {
+        "prefix": "arrmethods",
+        "body": []
+    },
+    "infinities": {
+        "prefix": "infs",
+        "body": [
+            // infinities that are big enough for
+            // usual test cases but won't overflow
+            // if you double them or add some constants
+            "const int INT_INF = 0x3f3f3f3f;",
+            // noe here that 2*LD_INF==LD_INF
+            "const ld LD_ACTUAL_INF = 1.0l/0.0;",
+            "const ld LD_INF = 1e15;", // Large double
+            "const ld LD_EPS = 1e-8;", // Small double epsilon, used for computational geometry
+            "int dbcmp(ld a, ld b) { return (fabsl(a - b) < LD_EPS) ? 0 : (a < b ? -1 : 1); }"
+            // what for LL_INF and LU_INF?
+        ]
+    },
+    "tests": {
+        "prefix": "tests",
+        "body": ["ll t;", "scanf(\"%lld\", &t);", "while(t--){", "    // ${0:code}", "}"]
     },
     "primes related methods": {
         "prefix": "prfunctions",
@@ -226,23 +255,23 @@
     },
     "cin": {
         "prefix": "ci",
-        "body": "cin >> $1;"
+        "body": ["cin >> $1;", "$0"]
     },
     "cout": {
         "prefix": "co",
-        "body": "cout << $1 << endl;"
+        "body": ["cout << $1 << '\\n';", "$0"]
     },
     "ignore spaces/newlines after int input": {
         "prefix": "ignore",
-        "body": "cin.ignore(256, '\n');"
+        "body": "cin.ignore(256, '\\n');"
     },
     "cumsum": {
         "prefix": "cumsum",
         "body": [
-            "${1:v} sum(${3:n});",
-            "sum.push_back(${2:a}[0]);",
-            "for(ll i = 1; i < ${3}; i++){",
-            "    sum[i] = sum[i - 1] + ${2}[i];",
+            "${1:v} sum(${2:n});",
+            "sum[0] = ${3:a}[0];",
+            "for(ll i = 1; i < ${2}; i++){",
+            "    sum[i] = sum[i - 1] + ${3}[i];",
             "}"
         ],
         "description": "generate simple prefix sum array for given integers"
@@ -332,7 +361,7 @@
             "        }",
             "    }",
             "    v1.insert(v1.end(), v2.rbegin(), v2.rend());",
-            "    return v1;",
+            "    return move(v1);",
             "}",
             "",
             "lu countFactors(lu a){",
@@ -365,5 +394,10 @@
             "}"
         ],
         "prefix": "rotmethods"
+    },
+    "max for n different variables": {
+        "body": "??",
+        "prefix": "??",
+        "description": "max for n different variables, both via arguments and via an array (overload)"
     }
 }
