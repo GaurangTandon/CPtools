@@ -31,19 +31,19 @@
             "#include <iostream>",
             // for simple string operations
             "#include <string>",
+            "#include <map>",
+            "#include <set>",
+            "#include <queue>",
             "// for iota, accumulate, partial_sum",
             "// #include <numeric>",
             "// #include <iomanip>",
             "// #include <fstream>",
             "// #include <deque>",
             "// #include <cmath>",
-            "// #include <map>",
             "// #include <unordered_map>",
             "// #include <utility>",
-            "// #include <set>",
             "// #include <unordered_set>",
             "// #include <ctime>",
-            "// #include <queue>",
             "// #include <stack>",
             "// #include <bitset>",
             "// #include <random>",
@@ -57,8 +57,13 @@
             // prefer to use the first definition
             "#define v vector<ll>",
             "#define vu vector<lu>",
+            "#define vvu vector<vector<lu>>",
             "#define vld vector<ld>",
             "#define vs vector<string>",
+            "#define pll pair<ll,ll>",
+            "#define vpll vector<pair<ll,ll>>",
+            "#define puu pair<lu,lu>",
+            "#define vpuu vector<pair<lu,lu>>",
             "const lu MOD = 1000000007;",
             "const ld PI = 2 * acos(0.0);",
             // convenient method to ceil x/y
@@ -69,7 +74,10 @@
             "#define ce(x, y) ((x+y-1)/y)",
             "#define amax(x, y) if(y > x) x = y;",
             "#define amin(x, y) if(y < x) x = y;",
-            "#define str(x) to_string(x)",
+            "#define lcm(x, y) ((x) * (y) / __gcd(x, y))",
+            // useful when taking squares and cubes of larger expressions
+            "#define sq(x) ((x) * (x))",
+            "#define cb(x) ((x) * (x) * (x))",
             "",
             // so we can easily do sort(whole(x))
             // instead of sort(x.begin(), x.end())
@@ -92,7 +100,7 @@
             "    vu a;",
             "    for(lu i = 0; i < n; i++){",
             "        lu p;",
-            "        // scanf(\"%llu\", &p);",
+            "        // scanf(\"%lu\", &p);",
             "        cin >> p;",
             "        a.push_back(p);",
             "    }",
@@ -102,7 +110,7 @@
             "    vs a;",
             "    for(lu i = 0; i < n; i++){",
             "        string p;",
-            "        // scanf(\"%llu\", &p);",
+            "        // scanf(\"%lu\", &p);",
             "        cin >> p;",
             "        a.push_back(p);",
             "    }",
@@ -118,22 +126,41 @@
             // "}",
             // "void pa(vu a){",
             // "    for(lu p : a){",
-            // "        // printf(\"%llu \", a[i]);",
+            // "        // printf(\"%lu \", a[i]);",
             // "        cout << p << \" \";",
             // "    }",
             // "}",
             "template <typename T, typename A>",
             "void pa(vector<T, A> const &a){",
             "    for(T p : a){",
-            "        // printf(\"%llu \", a[i]);",
+            "        // printf(\"%lu \", a[i]);",
             "        cout << p << \" \";",
             "    }",
-            "    cout << '\\n';",
+            "    cout << \"\\n\";",
+            "}",
+            "",
+            "void yes() {",
+            "    cout << \"YES\\n\";",
+            "}",
+
+            "",
+            "void no() {",
+            "    cout << \"NO\\n\";",
+            "}",
+            "",
+            "void yesno(int f){",
+            "    if(f) yes(); else no();",
+            "}",
+            "",
+            "void solve(){",
+            "    ${0:// code}",
             "}",
             "",
             "int main(void){",
             "    ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);",
-            "    ${0:// code}",
+            // when you require to use this line just uncomment it
+            "    ${1:// ll t;cin >> t;while(t--)}",
+            "    solve();",
             "    return 0;",
             "}"
         ],
@@ -142,12 +169,12 @@
     // size_t when compared with int gives incorrect results
     "non size_t loop": {
         "prefix": "ff",
-        "body": ["for(${1:ll} ${2:i} = ${3:0}; $2 < ${4:len}; $2++){", "    ${0:// code}", "}"],
+        "body": ["for(${1:lu} ${2:i} = ${3:0}; $2 < ${4:n}; $2++){", "    ${0:// code}", "}"],
         "description": "Default contents of a C file"
     },
     "non size_t reverse loop": {
         "prefix": "fr",
-        "body": ["for(${1:ll} ${2:i} = ${3:len} - 1; $2 >= ${4:0}; $2--){", "    ${0:// code}", "}"],
+        "body": ["for(${1:ll} ${2:i} = ${3:n} - 1; $2 >= ${4:0}; $2--){", "    ${0:// code}", "}"],
         "description": "Default contents of a C file"
     },
     "yes_no": {
@@ -193,6 +220,11 @@
             "}"
         ]
     },
+    "leap year": {
+        "prefix": "leapfr",
+        "body": ["bool isLeap(lu y){", "    return (y % 4 == 0 && y % 100 != 0) || y % 400 == 0;", "}"],
+        "description": ""
+    },
     "Array functions": {
         "prefix": "arrmethods",
         "body": []
@@ -214,21 +246,21 @@
     },
     "tests": {
         "prefix": "tests",
-        "body": ["ll t;", "scanf(\"%lld\", &t);", "while(t--){", "    // ${0:code}", "}"]
+        "body": ["ll t;", "cin >> t;", "while(t--){", "    solve();", "}"]
     },
     "primes related methods": {
         "prefix": "prfunctions",
         "body": [
-            "llu ${1:sieve}[${2:size}]; vu primes;",
+            "lu ${1:sieve}[${2:size}]; vu primes;",
             "",
             "void con(){",
-            "    for(llu i = 2; i < $2; i++){",
+            "    for(lu i = 2; i < $2; i++){",
             "         $1[i] = i;",
             "    }",
-            "    for(llu i = 2; i < $2; i++){",
+            "    for(lu i = 2; i < $2; i++){",
             "        if($1[i] == i){",
             "            primes.push_back(i);",
-            "            for(llu j = i * 2; j < $2 && j > 0; j += i){",
+            "            for(lu j = i * 2; j < $2 && j > 0; j += i){",
             "                // retain below line if you wish to store smallest prime factor",
             "                ${3:if($1[j] == j)}",
             "                    $1[j] = i;",
@@ -247,11 +279,11 @@
     },
     "scanf": {
         "prefix": "sf",
-        "body": "scanf(\"${1:%llu}\", ${0:&n});"
+        "body": "scanf(\"${1:%lu}\", ${0:&n});"
     },
     "printf": {
         "prefix": "pf",
-        "body": "printf(\"${1:%llu}\", ${0:n});"
+        "body": "printf(\"${1:%lu}\", ${0:n});"
     },
     "cin": {
         "prefix": "ci",
@@ -259,7 +291,7 @@
     },
     "cout": {
         "prefix": "co",
-        "body": ["cout << $1 << '\\n';", "$0"]
+        "body": ["cout << $1 << \"\\n\";", "$0"]
     },
     "ignore spaces/newlines after int input": {
         "prefix": "ignore",
@@ -286,7 +318,7 @@
         "body": [
             "// 2^35 is roughly 10^11",
             "const ll ${1:lim}=${2:35};",
-            "vllu powers(${1});",
+            "vu powers(${1});",
             "// rest of this code goes into main, above is global",
             "powers.push_back(1);",
             "for(ll i = 1; i < ${1}; i++){",
@@ -299,9 +331,9 @@
         "description": "two functions for x^y and x^y%mod",
         "body": [
             // avoid clash with pow inbuilt function
-            "llu po(llu base, llu exp)",
+            "lu po(lu base, lu exp)",
             "{",
-            "    llu result = 1;",
+            "    lu result = 1;",
             "    for (;;)",
             "    {",
             "        if (exp & 1)",
@@ -315,9 +347,9 @@
             "    return result;",
             "}",
             "",
-            "llu pomod(llu x, llu y, llu mod)",
+            "lu pomod(lu x, lu y, lu mod)",
             "{",
-            "    llu res = 1;",
+            "    lu res = 1;",
             "    x = x % mod;",
             "",
             "    while (y > 0)",
@@ -336,9 +368,9 @@
         "body": [
             "${1:lu} multmod($1 a, $1 b, $1 mod){",
             "    if(a == 0 || b == 0) return 0;",
-            "    if(b == 1) return a;",
-            "    if(b & 1) return a + 2 * multmod(a, b / 2, mod);",
-            "    else return 2 * multmod(a, b / 2, mod);",
+            "    if(b == 1) return a % mod;",
+            "    if(b & 1) return (a + 2 * multmod(a, b / 2, mod)) % mod;",
+            "    else return (2 * multmod(a, b / 2, mod)) % mod;",
             "}"
         ]
     },
