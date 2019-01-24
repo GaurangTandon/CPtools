@@ -75,6 +75,9 @@
             "#define amax(x, y) if(y > x) x = y;",
             "#define amin(x, y) if(y < x) x = y;",
             "#define lcm(x, y) ((x) * (y) / __gcd(x, y))",
+            // stupid seg fault for x.size() - 1 overflowing for empty x as x.size() is always unsigned
+            "#define sz(x) (ll)x.size()",
+            "#define len(x) (ll)x.length()",
             // useful when taking squares and cubes of larger expressions
             "#define sq(x) ((x) * (x))",
             "#define cb(x) ((x) * (x) * (x))",
