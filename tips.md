@@ -18,7 +18,7 @@ Tips are separated by categories
         mkfifo myfifo
         ./grader < myfifo | ./solution > myfifo
 
-        `mkfifo` creates a named fifo (`myfifo` in this case) which we can use for queuing the output of `solution` into the `grader`. One small problem is that you cannot view the contents of `myfifo` unless you close the output connection, which I do not know how to.  
+        `mkfifo` creates a named fifo (`myfifo` in this case) which we can use for queuing the output of `solution` into the `grader`. One small problem is that you cannot view the contents of `myfifo` unless you close the output connection, which I do not know how to.
         So, you can simply write the output to a separate file via an `ofstream` (use `sol.txt` for one and `grad.txt` for another)
 
 ## Hacking
@@ -30,17 +30,15 @@ Tips are separated by categories
 
 ## Compilation
 
-Use the `-O2` flag for compilation by default. It takes more time to compile but it enables several optimizations. Since you don't get the command line for yourself, you can use pragma directives. The lines to stick at the top are:
+Don't use the `-O2` flag for compilation by default. It takes more time to compile and it enables several optimizations, but it demolishes the `print <local_variable>` output that is otherwise available in GDB. Interestingly, codeforces.com [already compiles](https://codeforces.com/blog/entry/79) the files with `-O2` flag.
+
+To enable O2 anyway, since you don't get the command line for yourself, you can use pragma directives. The lines to stick at the top are:
 
     #pragma comment(linker, "/stack:200000000")
     #pragma GCC optimize ("Ofast")
     #pragma GCC target ("sse,sse2,sse3,ssse3,sse4,popcnt,abm,mmx,avx,tune=native")
 
-Read more compilation options on [this page](https://gcc.gnu.org/onlinedocs/gcc/Optimize-Options.html#index-Ofast).
-
-How do the first and last line actually work?
-
-Interestingly, codeforces.com [already compiles](https://codeforces.com/blog/entry/79) the files with `-O2` flag.
+Read more compilation options on [this page](https://gcc.gnu.org/onlinedocs/gcc/Optimize-Options.html#index-Ofast). How do the first and last line actually work?
 
 ## General coding
 
@@ -81,6 +79,27 @@ Interestingly, codeforces.com [already compiles](https://codeforces.com/blog/ent
 1. Make sure your index variable - with which you are looping over a vector - is bounded till the size of the vector. C++ fails without any warning in case of that, gives undefined behavior.
 2. Use `emplace_back` instead of `push_back` for [marked performance improvement](https://stackoverflow.com/questions/26860749/efficiency-of-c11-push-back-with-stdmove-versus-emplace-back-for-already). The bug (mainly typesafety) involved with emplace_back is not our concern in CP ([post](https://stackoverflow.com/questions/10890653/why-would-i-ever-use-push-back-instead-of-emplace-back/28435599)).
 3. Always pass large vectors, especially large 2D vectors (think `1000x1000`), to methods using the ampersand argument format. Also, if the total number of elements exceeds `10^6`, declare them globally and convert from `lu` to possibly `int` or `long int`. Otherwise you will get MLE.
+4. Always initialize very large vectors outside of your main loop. For example, the time complexity of the following program is `O(n * k)`:
+
+        for(int i = 0; i < n; i++){
+            vu freq(k + 1, 0);
+        }
+    Instead of this, consider doing this:
+
+        vu freq(k + 1, 0);
+        for(int i = 0; i < n; i++){
+            // keep track of which values are
+            // changed from 0
+            set<lu> usedValues;
+
+            // every time we use a value
+            // we insert it
+            usedValues.insert(<any used value>);
+
+            // reset used values
+            for(auto x : usedValues)
+                freq[x] = 0;
+        }
 
 ## Strings
 
