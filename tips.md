@@ -79,7 +79,7 @@ Read more compilation options on [this page](https://gcc.gnu.org/onlinedocs/gcc/
 1. Make sure your index variable - with which you are looping over a vector - is bounded till the size of the vector. C++ fails without any warning in case of that, gives undefined behavior.
 2. Use `emplace_back` instead of `push_back` for [marked performance improvement](https://stackoverflow.com/questions/26860749/efficiency-of-c11-push-back-with-stdmove-versus-emplace-back-for-already). The bug (mainly typesafety) involved with emplace_back is not our concern in CP ([post](https://stackoverflow.com/questions/10890653/why-would-i-ever-use-push-back-instead-of-emplace-back/28435599)).
 3. Always pass large vectors, especially large 2D vectors (think `1000x1000`), to methods using the ampersand argument format. Also, if the total number of elements exceeds `10^6`, declare them globally and convert from `lu` to possibly `int` or `long int`. Otherwise you will get MLE.
-4. Always initialize very large vectors outside of your main loop. For example, the time complexity of the following program is `O(n * k)`:
+4. Always initialize very large vectors outside of your main loop. For example, the time complexity of the following program is `O(n * k)`, which will TLE if n and k are both very large:
 
         for(int i = 0; i < n; i++){
             vu freq(k + 1, 0);
@@ -100,6 +100,8 @@ Read more compilation options on [this page](https://gcc.gnu.org/onlinedocs/gcc/
             for(auto x : usedValues)
                 freq[x] = 0;
         }
+
+    The same problem plagues array initialization (`int arr[k] = {0};`) and cannot be avoided by doing `memset(arr, k, 0);` as the latter also takes `O(k)`.
 
 ## Strings
 
