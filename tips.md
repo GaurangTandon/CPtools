@@ -61,7 +61,7 @@ Interestingly, codeforces.com [already compiles](https://codeforces.com/blog/ent
             tie(idx, found) = f(params);
         }
 
-7.  **Use of auto-keyword:** Instead of `set<pair<int, pair<int, int> > >::iterator` you can simply do `auto it = s.begin()`
+7.  **Use of auto-keyword:** Instead of `set<pair<int, pair<int, int>>>::iterator` you can simply do `auto it = s.begin()`
 8.  To exclude some code from executing in online judge (C++), you can use this:
 
         #ifndef ONLINE_JUDGE
@@ -80,6 +80,11 @@ Interestingly, codeforces.com [already compiles](https://codeforces.com/blog/ent
 
 1. Make sure your index variable - with which you are looping over a vector - is bounded till the size of the vector. C++ fails without any warning in case of that, gives undefined behavior.
 2. Use `emplace_back` instead of `push_back` for [marked performance improvement](https://stackoverflow.com/questions/26860749/efficiency-of-c11-push-back-with-stdmove-versus-emplace-back-for-already). The bug (mainly typesafety) involved with emplace_back is not our concern in CP ([post](https://stackoverflow.com/questions/10890653/why-would-i-ever-use-push-back-instead-of-emplace-back/28435599)).
+3. Always pass large vectors, especially large 2D vectors (think `1000x1000`), to methods using the ampersand argument format. Also, if the total number of elements exceeds `10^6`, declare them globally and convert from `lu` to possibly `int` or `long int`. Otherwise you will get MLE.
+
+## Strings
+
+1. Always check size of string before applying integer parsing functions. For example, don't pass strings of length greater than 18 to `stoull`.
 
 ## General algo
 
