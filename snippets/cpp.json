@@ -56,6 +56,7 @@
             // prefer to use the first definition
             "#define v vector<ll>",
             "#define vu vector<lu>",
+            "#define vv vector<vector<ll>>",
             "#define vvu vector<vector<lu>>",
             "#define vld vector<ld>",
             "#define vs vector<string>",
@@ -63,7 +64,7 @@
             "#define vpll vector<pair<ll,ll>>",
             "#define puu pair<lu,lu>",
             "#define vpuu vector<pair<lu,lu>>",
-            "const lu MOD = 1000000007;",
+            "const ll MOD = 1000000007;",
             "const ld PI = 2 * acos(0.0);",
             // convenient method to ceil x/y
             // no need to cast into long double and
@@ -171,12 +172,12 @@
     // size_t when compared with int gives incorrect results
     "non size_t loop": {
         "prefix": "ff",
-        "body": ["for(${1:lu} ${2:i} = ${3:0}; $2 < ${4:n}; $2++){", "    ${0:// code}", "}"],
+        "body": ["for(${1:ll} ${2:i} = ${3:0}; $2 < ${4:n}; $2++){", "    ${0:// code}", "}"],
         "description": "Default contents of a C file"
     },
     "non size_t reverse loop": {
         "prefix": "fr",
-        "body": ["for(${1:ll} ${2:i} = ${3:n} - 1; $2 >= ${4:0}; $2--){", "    ${0:// code}", "}"],
+        "body": ["for(${1:ll} ${2:i} = ${3:n - 1}; $2 >= ${4:0}; $2--){", "    ${0:// code}", "}"],
         "description": "Default contents of a C file"
     },
     "yes_no": {
@@ -245,7 +246,7 @@
     },
     "leap year": {
         "prefix": "leapfr",
-        "body": ["bool isLeap(lu y){", "    return (y % 4 == 0 && y % 100 != 0) || y % 400 == 0;", "}"],
+        "body": ["bool isLeap(ll y){", "    return (y % 4 == 0 && y % 100 != 0) || y % 400 == 0;", "}"],
         "description": ""
     },
     "Array functions": {
@@ -272,18 +273,18 @@
         "body": ["ll t;", "cin >> t;", "while(t--){", "    solve();", "}"]
     },
     "primes related methods": {
-        "prefix": "prfunctions",
+        "prefix": "primemethods",
         "body": [
-            "lu ${1:sieve}[${2:size}]; vu primes;",
+            "ll ${1:sieve}[${2:size}]; vu primes;",
             "",
             "void con(){",
-            "    for(lu i = 2; i < $2; i++){",
+            "    for(ll i = 2; i < $2; i++){",
             "         $1[i] = i;",
             "    }",
-            "    for(lu i = 2; i < $2; i++){",
+            "    for(ll i = 2; i < $2; i++){",
             "        if($1[i] == i){",
             "            primes.push_back(i);",
-            "            for(lu j = i * 2; j < $2 && j > 0; j += i){",
+            "            for(ll j = i * 2; j < $2 && j > 0; j += i){",
             "                // retain below line if you wish to store smallest prime factor",
             "                ${3:if($1[j] == j)}",
             "                    $1[j] = i;",
@@ -302,11 +303,11 @@
     },
     "scanf": {
         "prefix": "sf",
-        "body": "scanf(\"${1:%lu}\", ${0:&n});"
+        "body": "scanf(\"${1:%lld}\", ${0:&n});"
     },
     "printf": {
         "prefix": "pf",
-        "body": "printf(\"${1:%lu}\", ${0:n});"
+        "body": "printf(\"${1:%lld}\", ${0:n});"
     },
     "cin": {
         "prefix": "ci",
@@ -339,7 +340,7 @@
         "body": [
             "${1:v} sum(${2:n});",
             "sum[0] = ${3:a}[0];",
-            "for(lu i = 1; i < ${2}; i++){",
+            "for(ll i = 1; i < ${2}; i++){",
             "    sum[i] = sum[i - 1] + ${3}[i];",
             "}"
         ],
@@ -351,7 +352,7 @@
     },
 
     "powersOfN": {
-        "prefix": "powers",
+        "prefix": "powergenerator",
         "body": [
             "// 2^35 is roughly 10^11",
             "const ll ${1:lim}=${2:35};",
@@ -364,13 +365,14 @@
         ]
     },
     "powerfunc": {
-        "prefix": "power",
+        "prefix": "powermethods",
         "description": "two functions for x^y and x^y%mod",
         "body": [
             // avoid clash with pow inbuilt function
-            "lu po(lu base, lu exp)",
+            "template<typename T>",
+            "T po(T base, T exp)",
             "{",
-            "    lu result = 1;",
+            "    T result = 1;",
             "    for (;;)",
             "    {",
             "        if (exp & 1)",
@@ -384,9 +386,10 @@
             "    return result;",
             "}",
             "",
-            "lu pomod(lu x, lu y, lu mod)",
+            "template<typename T>",
+            "T pomod(T x, T y, T mod)",
             "{",
-            "    lu res = 1;",
+            "    T res = 1;",
             "    x = x % mod;",
             "",
             "    while (y > 0)",
@@ -403,7 +406,8 @@
     "multiplication mod": {
         "prefix": "multmod",
         "body": [
-            "${1:lu} multmod($1 a, $1 b, $1 mod){",
+            "template<typename T>",
+            "T multmod(T a, T b, T mod){",
             "    if(a == 0 || b == 0) return 0;",
             "    if(b == 1) return a % mod;",
             "    if(b & 1) return (a + 2 * multmod(a, b / 2, mod)) % mod;",
@@ -412,15 +416,16 @@
         ]
     },
     "methods related to factors of a number": {
-        "prefix": "frmethods",
+        "prefix": "factormethods",
         "body": [
             // O(root N) algo to generate all factors of N
             // in ascending order
-            "vu getFactors(lu a){",
+            "template<typename T>",
+            "vector<T> getFactors(T a){",
             "    vu v1, v2;",
-            "    for(lu i = 1, sq = (lu) sqrt(a); i <= sq; i++){",
+            "    for(T i = 1, sqrrt = (T) sqrt(a); i <= sqrrt; i++){",
             "        if(a % i == 0){",
-            "            lu k = a / i;",
+            "            T k = a / i;",
             "            if(i == k){",
             "                v1.push_back(i);",
             "            } else {",
@@ -433,11 +438,12 @@
             "    return move(v1);",
             "}",
             "",
-            "lu countFactors(lu a){",
+            "template<typename T>",
+            "T countFactors(T a){",
             "    // prerequisite is sieve array of all primes",
-            "    lu c = 1, c2;",
+            "    T c = 1, c2;",
             "    while(a != 1){",
-            "        lu p = sieve[a];",
+            "        T p = sieve[a];",
             "        c2 = 0;",
             "        while(p == sieve[a]){",
             "            c2++;",
@@ -456,7 +462,8 @@
             "// dir = 0 left, dir = 1 right",
             // this is a neat wrapper over the underlying complicated rotate
             // STL method (requires <algorithm>)
-            "void rot(vu &a, lu b, lu e, lu k = 1, int dir = 0){",
+            "template<typename T>",
+            "void rot(vector<T> &a, T b, T e, T k = 1, T dir = 0){",
             "    k %= (e - b + 1);",
             "    if(dir) k = (e - b + 1) - k;    ",
             "    rotate(a.begin() + b, a.begin() + b + k, a.end() - (a.size() - e) + 1);",
@@ -488,10 +495,68 @@
         ],
         "prefix": "compmethods",
         "description": "compare two large strings as integers"
-    }
+    },
     "max for n different variables": {
         "body": "??",
         "prefix": "??",
         "description": "max for n different variables, both via arguments and via an array (overload)"
+    },
+    "sorting for vvu type data": {
+        "body": "sort(all(${1:a}), [](auto a, auto b) {\nreturn a[0] < b[0] || (a[0] == b[0] && a[1] < b[1]);\n});",
+        "prefix": "sorter"
+    },
+    "graph traversal for all connected components": {
+        "body": [
+            "ll n, m;",
+            "cin >> n >> m;",
+            "",
+            "// nodes numbered from 1 to n",
+            "vv adjList(n + 1, vu(0));",
+            "vector<vector<bool>> adjMat(n + 1, vector<bool>(n + 1, false));",
+            "for (ll i = 0; i < m; i++)",
+            "{",
+            "    ll a, b;",
+            "    cin >> a >> b;",
+            "    // for undirected graphs",
+            "    adjMat[a][b] = true;",
+            "    adjMat[b][a] = true;",
+            "    adjList[a].push_back(b);",
+            "    adjList[b].push_back(a);",
+            "}",
+            "",
+            "// for graph with multiple connected components",
+            "ll leastUnvisited = 1;",
+            "vector<bool> visited(n + 1, false);",
+            "",
+            "while (leastUnvisited <= n)",
+            "{",
+            "    deque<lu> q;",
+            "    q.push_back(leastUnvisited);",
+            "    // keep track of all visited nodes",
+            "    set<lu> visits;",
+            "",
+            "    visited[leastUnvisited] = true;",
+            "",
+            "    while (!q.empty())",
+            "    {",
+            "        ll x = q[0];",
+            "        q.pop_front();",
+            "        visits.insert(x);",
+            "",
+            "        for (auto p : adjList[x])",
+            "        {",
+            "            if (!visited[p])",
+            "            {",
+            "                visited[p] = true;",
+            "                q.push_back(p);",
+            "            }",
+            "        }",
+            "    }",
+            "",
+            "    while (leastUnvisited < n && visited[leastUnvisited])",
+            "        leastUnvisited++;",
+            "}"
+        ],
+        "prefix": "graphtraversal"
     }
 }
