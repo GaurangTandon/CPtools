@@ -455,6 +455,23 @@
             "}"
         ]
     },
+    "split into segs by frequency": {
+        "prefix": "makesegments",
+        "description": "make segments based on {number, frequency}",
+        "body": [
+            "vv segs;",
+            "for (ll i = 0; i < n; i++)",
+            "{",
+            "    ll c = 1;",
+            "    while (i < n - 1 && a[i] == a[i + 1])",
+            "    {",
+            "        i++;",
+            "        c++;",
+            "    }",
+            "    segs.push_back({a[i], c});",
+            "}"
+        ]
+    }
     "rotation methods": {
         "body": [
             "// rotate segment of vector from a to b (inclusive) in dir",
