@@ -455,6 +455,14 @@
             "}"
         ]
     },
+    "isvowel": {
+        "prefix": "isvowel",
+        "body": [
+            "bool isVowel(char x){",
+            "    return x == 'a' || x == 'e' || x == 'i' || x == 'o' || x == 'u';",
+            "}"
+        ]
+    },
     "split into segs by frequency": {
         "prefix": "makesegments",
         "description": "make segments based on {number, frequency}",
