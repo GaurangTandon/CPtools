@@ -134,13 +134,6 @@
             "    }",
             "    cout << \"\\n\";",
             "}",
-            "template <typename T>",
-            "void pa(vector<vector<T>> const &a){",
-            "    for(auto p : a){",
-            "        pa(p);",
-            "    }",
-            "    cout << \"\\n\";",
-            "}",
             "",
             "void yes() {",
             "    cout << \"YES\\n\";",
@@ -275,7 +268,7 @@
     "primes related methods": {
         "prefix": "primemethods",
         "body": [
-            "ll ${1:sieve}[${2:size}]; vu primes;",
+            "ll ${1:sieve}[${2:size}]; v primes;",
             "",
             "void con(){",
             "    for(ll i = 2; i < $2; i++){",
