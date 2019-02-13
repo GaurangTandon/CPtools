@@ -529,7 +529,7 @@
             "cin >> n >> m;",
             "",
             "// nodes numbered from 1 to n",
-            "vv adjList(n + 1, vu(0));",
+            "vv adjList(n + 1, v(0));",
             "vector<vector<bool>> adjMat(n + 1, vector<bool>(n + 1, false));",
             "for (ll i = 0; i < m; i++)",
             "{",
