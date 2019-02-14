@@ -576,5 +576,21 @@
             "}"
         ],
         "prefix": "graphtraversal"
+    },
+    "dfs": {
+        "prefix": "dfs",
+        "body": [
+            "void dfs(vv &adjList, ll curr, ll prev)",
+            "{",
+            "    for (auto neigh : adjList[curr])",
+            "    {",
+            "        if (neigh != prev)",
+            "        {",
+            "            parents[neigh] = curr;",
+            "            dfs(adjList, neigh, curr);",
+            "        }",
+            "    }",
+            "}"
+        ]
     }
 }
