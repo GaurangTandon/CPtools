@@ -54,6 +54,7 @@
             "typedef long long int ll;",
             "typedef long double ld;",
             // prefer to use the first definition
+            "#define endl \"\n\"",
             "#define v vector<ll>",
             "#define vu vector<lu>",
             "#define vv vector<vector<ll>>",
@@ -591,6 +592,14 @@
             "        }",
             "    }",
             "}"
+        ]
+    },
+    "string input": {
+        "prefix": "inpstring",
+        "body": [
+            "string s;",
+            "cin >> s;",
+            "ll n = sz(s);"
         ]
     }
 }
