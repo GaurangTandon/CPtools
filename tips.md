@@ -67,6 +67,8 @@ Read more compilation options on [this page](https://gcc.gnu.org/onlinedocs/gcc/
         #else
         //code that should execute in ONLINE JUDGE
         #endif
+        
+9. When using a function `newnode` to initialize a new struct pointer, note that values of arrays inside struct are not automatically initialized. So, `node->array[i]` is null. Hence, need to manually iniitialize each index of an array property. Else you get run error, [like here](https://codeforces.com/contest/514/submission/52626249).
 
 ## IO
 
