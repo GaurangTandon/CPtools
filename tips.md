@@ -67,9 +67,18 @@ Read more compilation options on [this page](https://gcc.gnu.org/onlinedocs/gcc/
         #else
         //code that should execute in ONLINE JUDGE
         #endif
-        
-9. When using a function `newnode` to initialize a new struct pointer, note that values of arrays inside struct are not automatically initialized. So, `node->array[i]` is null. Hence, need to manually iniitialize each index of an array property. Else you get run error, [like here](https://codeforces.com/contest/514/submission/52626249).
+
+9.  When using a function `newnode` to initialize a new struct pointer, note that values of arrays inside struct are not automatically initialized. So, `node->array[i]` is null. Hence, need to manually iniitialize each index of an array property. Else you get run error, [like here](https://codeforces.com/contest/514/submission/52626249).
 10. If you get a run error in a line where you shouldn't, especially `free()` related errors, that means you have undefined behavior somewhere above in your file. Comment out parts of your file and run the debugger to understand where it is.
+
+## Causes for TLE
+
+1. Sorting a very large vector of pairs using a custom comparator function (`[](){}`) can cause TLE. [Example link](https://codeforces.com/contest/605/submission/54273199)
+2. Using `long long` instead of `int` can cause TLE. ![Example](https://i.imgur.com/im2FJPK.png)
+
+## Causes for MLE
+
+1. A 10^7 vector of long long ints takes roughly 400MB. So, consider using int instead, which takes 200MB.
 
 ## IO
 
@@ -79,14 +88,15 @@ Read more compilation options on [this page](https://gcc.gnu.org/onlinedocs/gcc/
 
 ## Using vectors
 
-1. Make sure your index variable - with which you are looping over a vector - is bounded till the size of the vector. C++ fails without any warning in case of that, gives undefined behavior.
-2. Use `emplace_back` instead of `push_back` for [marked performance improvement](https://stackoverflow.com/questions/26860749/efficiency-of-c11-push-back-with-stdmove-versus-emplace-back-for-already). The bug (mainly typesafety) involved with emplace_back is not our concern in CP ([post](https://stackoverflow.com/questions/10890653/why-would-i-ever-use-push-back-instead-of-emplace-back/28435599)).
-3. Always pass large vectors, especially large 2D vectors (think `1000x1000`), to methods using the ampersand argument format. Also, if the total number of elements exceeds `10^6`, declare them globally and convert from `lu` to possibly `int` or `long int`. Otherwise you will get MLE.
-4. Always initialize very large vectors outside of your main loop. For example, the time complexity of the following program is `O(n * k)`, which will TLE if n and k are both very large:
+1.  Make sure your index variable - with which you are looping over a vector - is bounded till the size of the vector. C++ fails without any warning in case of that, gives undefined behavior.
+2.  Use `emplace_back` instead of `push_back` for [marked performance improvement](https://stackoverflow.com/questions/26860749/efficiency-of-c11-push-back-with-stdmove-versus-emplace-back-for-already). The bug (mainly typesafety) involved with emplace_back is not our concern in CP ([post](https://stackoverflow.com/questions/10890653/why-would-i-ever-use-push-back-instead-of-emplace-back/28435599)).
+3.  Always pass large vectors, especially large 2D vectors (think `1000x1000`), to methods using the ampersand argument format. Also, if the total number of elements exceeds `10^6`, declare them globally and convert from `lu` to possibly `int` or `long int`. Otherwise you will get MLE.
+4.  Always initialize very large vectors outside of your main loop. For example, the time complexity of the following program is `O(n * k)`, which will TLE if n and k are both very large:
 
         for(int i = 0; i < n; i++){
             vu freq(k + 1, 0);
         }
+
     Instead of this, consider doing this:
 
         vu freq(k + 1, 0);
