@@ -42,12 +42,11 @@ Read more compilation options on [this page](https://gcc.gnu.org/onlinedocs/gcc/
 
 ## General coding
 
-1.  Adding several `#include` statements to your code, or that innocent `#include<bits/stdc++.h>` can scale your code's compilation time to upto 2-3 seconds, which matter a lot in quickly solving A or B problems. So, include only those libraries which are necesary, commment out the rest.
-2.  Decide upon some standard variable names. Like, `a` for arrays, prefix sum array as `sum`, `s` for strings, etc. Avoid longer names. At max, competitive code has only six distinct variables in any scope, so there can't/shouldn't be much confusion.
-3.  Use vectors if you're using C++. There's no reason to not use vectors when they are available. They are not only [as fast as plain arrays](https://stackoverflow.com/questions/26189531/how-is-stdvector-faster-than-a-plain-array), but are also dynamically sized with constant access time. They also allow sorting operations, any index insertion/deletion, etc. on them.
-4.  Avoid `int`s in your code. There's no reason to use `int`s when `long long int` are available, which do the same task and also avoid the occassional overflow problem that you might forget to take care of.
-5.  Use as many keybindings, snippets, etc. as you can during the contest. Make your text editor your own.
-6.  It is recommended to avoid writing functions that return more than one value, as it leads to harder debugging. However, this may sometimes be desirable, for example to return index of first occurrence of string that begins with "a", and the string itself. So, you can use `std::tie` and `std::tuple` for that.
+1.  Decide upon some standard variable names. Like, `a` for arrays, prefix sum array as `sum`, `s` for strings, etc. Avoid longer names. At max, competitive code has only six distinct variables in any scope, so there can't/shouldn't be much confusion.
+2.  Use vectors if you're using C++. There's no reason to not use vectors when they are available. They are not only [as fast as plain arrays](https://stackoverflow.com/questions/26189531/how-is-stdvector-faster-than-a-plain-array), but are also dynamically sized with constant access time. They also allow sorting operations, any index insertion/deletion, etc. on them.
+3.  Avoid `int`s in your code. There's no reason to use `int`s when `long long int` are available, which do the same task and also avoid the occassional overflow problem that you might forget to take care of.
+4.  Use as many keybindings, snippets, etc. as you can during the contest. Make your text editor your own.
+5.  It is recommended to avoid writing functions that return more than one value, as it leads to harder debugging. However, this may sometimes be desirable, for example to return index of first occurrence of string that begins with "a", and the string itself. So, you can use `std::tie` and `std::tuple` for that.
 
         tuple<int, string> f(params) {
             // do some searching
@@ -59,8 +58,8 @@ Read more compilation options on [this page](https://gcc.gnu.org/onlinedocs/gcc/
             tie(idx, found) = f(params);
         }
 
-7.  **Use of auto-keyword:** Instead of `set<pair<int, pair<int, int>>>::iterator` you can simply do `auto it = s.begin()`
-8.  To exclude some code from executing in online judge (C++), you can use this:
+6.  **Use of auto-keyword:** Instead of `set<pair<int, pair<int, int>>>::iterator` you can simply do `auto it = s.begin()`
+7.  To exclude some code from executing in online judge (C++), you can use this:
 
         #ifndef ONLINE_JUDGE
         //code that should not execute in ONLINE JUDGE
@@ -68,8 +67,8 @@ Read more compilation options on [this page](https://gcc.gnu.org/onlinedocs/gcc/
         //code that should execute in ONLINE JUDGE
         #endif
 
-9.  When using a function `newnode` to initialize a new struct pointer, note that values of arrays inside struct are not automatically initialized. So, `node->array[i]` is null. Hence, need to manually iniitialize each index of an array property. Else you get run error, [like here](https://codeforces.com/contest/514/submission/52626249).
-10. If you get a run error in a line where you shouldn't, especially `free()` related errors, that means you have undefined behavior somewhere above in your file. Comment out parts of your file and run the debugger to understand where it is.
+8.  When using a function `newnode` to initialize a new struct pointer, note that values of arrays inside struct are not automatically initialized. So, `node->array[i]` is null. Hence, need to manually iniitialize each index of an array property. Else you get run error, [like here](https://codeforces.com/contest/514/submission/52626249).
+9.  If you get a run error in a line where you shouldn't, especially `free()` related errors, that means you have undefined behavior somewhere above in your file. Comment out parts of your file and run the debugger to understand where it is.
 
 ## Causes for TLE
 
@@ -115,6 +114,10 @@ Read more compilation options on [this page](https://gcc.gnu.org/onlinedocs/gcc/
         }
 
     The same problem plagues array initialization (`int arr[k] = {0};`) and cannot be avoided by doing `memset(arr, k, 0);` as the latter also takes `O(k)`.
+
+## Floats
+
+1. Use epsilon when comparing floating point values, even when with ints. For example, 1e-10
 
 ## Strings
 

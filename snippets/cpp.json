@@ -622,7 +622,7 @@
         "prefix": "dfs",
         "body": [
             "#define MAX (ll)3e5",
-            "v visited(MAX);",
+            "v visited(MAX, 0);",
             "v parents(MAX);",
             "v depths(MAX);",
             "void dfs(vv &adjList, ll curr, ll prev, ll depth)",
@@ -1001,6 +1001,59 @@
             "            }",
             "        }",
             "    }",
+            "}"
+        ]
+    },
+    "shortest path tree": {
+        "prefix": "sptree",
+        "body": [
+            "vv sptree(n + 1);",
+            "for (ll i = 1; i <= n; i++)",
+            "{",
+            "    if (parent[i])",
+            "    {",
+            "        sptree[i].push_back(parent[i]);",
+            "        sptree[parent[i]].push_back(i);",
+            "    }",
+            "}"
+        ]
+    },
+    "dfs if part of cycle": {
+        "prefix": "dfspartofcycle",
+        "body": [
+            "#define MAX (ll)3e5",
+            "v visited(MAX, 0);",
+            "v partofcycle(MAX, 0);",
+            "v cyclenodes;",
+            "bool dfs(vv &adjList, ll curr, ll prev)",
+            "{",
+            "    visited[curr] = 1;",
+            "    for (auto neigh : adjList[curr])",
+            "    {",
+            "        if (neigh == prev)",
+            "            continue;",
+            "        if (visited[neigh] == 0)",
+            "        {",
+            "            if (dfs(adjList, neigh, curr))",
+            "            {",
+            "                partofcycle[curr] = true;",
+            "                if (curr == cyclenodes.back())",
+            "                {",
+            "                    cyclenodes.pop_back();",
+            "                    return false;",
+            "                }",
+            "                else",
+            "                    return true;",
+            "            }",
+            "        }",
+            "        else",
+            "        {",
+            "            partofcycle[curr] = true;",
+            "            cyclenodes.push_back(neigh);",
+            "            return true;",
+            "        }",
+            "    }",
+            "    return false;",
             "}"
         ]
     }
