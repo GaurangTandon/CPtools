@@ -115,6 +115,10 @@ Read more compilation options on [this page](https://gcc.gnu.org/onlinedocs/gcc/
 
     The same problem plagues array initialization (`int arr[k] = {0};`) and cannot be avoided by doing `memset(arr, k, 0);` as the latter also takes `O(k)`.
 
+## Multisets
+
+1. `multiset.erase(value)` erases all copies of `value` in `multiset`. To delete just one value use `multiset.erase(multiset.find(value))` (but first ensure the value exists in multiset).
+
 ## Floats
 
 1. Use epsilon when comparing floating point values, even when with ints. For example, 1e-10
