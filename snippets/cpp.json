@@ -1056,5 +1056,43 @@
             "    return false;",
             "}"
         ]
+    },
+    "seg tree basic stuff": {
+        "prefix": "segtree",
+        "body": [
+            "void build(v &tree, v &arr, ll rL, ll rR, ll idx, ll treeIdx) {",
+            "    if (rL == rR) {",
+            "        tree[treeIdx] = arr[idx];",
+            "    } else {",
+            "        ll mid = rL + rR;",
+            "        mid >>= 1;",
+            "        build(tree, arr, rL, mid, idx, treeIdx << 1);",
+            "        build(tree, arr, mid + 1, rR, idx, (treeIdx << 1) | 1);",
+            "        tree[treeIdx] = max(tree[treeIdx << 1], tree[(treeIdx << 1) | 1]);",
+            "    }",
+            "}",
+            "",
+            "void update(v &tree, ll rL, ll rR, ll treeIdx, ll val) {",
+            "    if (rL == rR) {",
+            "        tree[treeIdx] = val;",
+            "    } else {",
+            "        ll mid = rL + rR;",
+            "        mid >>= 1;",
+            "        update(tree, rL, mid, treeIdx << 1, val);",
+            "        update(tree, mid + 1, rR, (treeIdx << 1) | 1, val);",
+            "        tree[treeIdx] = max(tree[treeIdx << 1], tree[(treeIdx << 1) | 1]);",
+            "    }",
+            "}",
+            "",
+            "ll query(v &tree, ll rL, ll rR, ll qL, ll qR, ll treeIdx) {",
+            "    if (rL >= qL && rR <= qR) {",
+            "        return tree[treeIdx];",
+            "    }",
+            "    ll mid = rL + rR;",
+            "    mid >>= 1;",
+            "    return max(query(tree, rL, mid, qL, qR, treeIdx << 1),",
+            "                query(tree, mid + 1, rR, qL, qR, (treeIdx << 1) | 1));",
+            "}"
+        ]
     }
 }

@@ -145,6 +145,10 @@ Read more compilation options on [this page](https://gcc.gnu.org/onlinedocs/gcc/
 1. When you receive an invalid answer output from an interactive problem, you should immediately terminate your program to receive a Wrong Answer verdict; otherwise, you may receive any verdict.
 2. Don't forget to flush the output after printing each line!
 
+## Graphs
+
+1. Kosaraju's algo works better with stacks than with toposort. See [failed toposort](https://codeforces.com/contest/427/submission/55713667) and [accepted stacks](https://codeforces.com/contest/427/submission/55713974) solution.
+
 # TODO:
 
 1. Create snippet for cumulative sum of 2d array,
