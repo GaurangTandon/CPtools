@@ -127,6 +127,10 @@ Read more compilation options on [this page](https://gcc.gnu.org/onlinedocs/gcc/
 
 1. Always check size of string before applying integer parsing functions. For example, don't pass strings of length greater than 18 to `stoull`.
 
+## Math
+
+1. `std::pow` is a constant time operation. See [SO](https://stackoverflow.com/q/13418180) and [code submission](https://codeforces.com/contest/453/submission/55961090) that passes on Codeforces.
+
 ## General algo
 
 1. **Stackoverflow**: The recursion stack is limited to around 350,000 on an average machine. This solution won't TLE, but will give a memory limit exceeded error. You'll get an error similar to `SIGSEGV: Invalid memory reference`, and in gdb, you will get the line number as the start of the method header. In general, avoid using recursion for such large cases, use iteration instead.
