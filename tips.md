@@ -130,6 +130,14 @@ Read more compilation options on [this page](https://gcc.gnu.org/onlinedocs/gcc/
 ## Math
 
 1. `std::pow` is a constant time operation. See [SO](https://stackoverflow.com/q/13418180) and [code submission](https://codeforces.com/contest/453/submission/55961090) that passes on Codeforces.
+2. Do not use `multmod` as far as possible because it can lead to time limit.
+3. For taking modulo, the following always works:
+
+    ```cpp
+    ll modder(ll value) {
+        return ((value % MOD) + MOD) % MOD;
+    }
+    ```
 
 ## General algo
 
