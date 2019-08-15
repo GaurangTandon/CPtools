@@ -133,7 +133,7 @@ Read more compilation options on [this page](https://gcc.gnu.org/onlinedocs/gcc/
 2. Do not use `multmod` as far as possible because it can lead to time limit.
 3. For taking modulo, the following always works:
 
-    ```cpp
+    ```c++
     ll modder(ll value) {
         return ((value % MOD) + MOD) % MOD;
     }
