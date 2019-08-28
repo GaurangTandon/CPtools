@@ -126,6 +126,7 @@ Read more compilation options on [this page](https://gcc.gnu.org/onlinedocs/gcc/
 ## Strings
 
 1. Always check size of string before applying integer parsing functions. For example, don't pass strings of length greater than 18 to `stoull`.
+2. Use `<` or `>` when attempting lexicographical comparison. It is much better than writing a normal for loop for the same.
 
 ## Math
 
