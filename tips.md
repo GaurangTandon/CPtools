@@ -161,6 +161,8 @@ Read more compilation options on [this page](https://gcc.gnu.org/onlinedocs/gcc/
 ## Graphs
 
 1. Kosaraju's algo works better with stacks than with toposort. See [failed toposort](https://codeforces.com/contest/427/submission/55713667) and [accepted stacks](https://codeforces.com/contest/427/submission/55713974) solution.
+2. `dfs` in a 2d grid: do not use pairs to keep track of coords and a `map<pll, bool> visited`.  Instead use `vector<vb> visited(1000, vb(1000,false))` and `x,y` separated arguments to do `dfs`. This can be the difference of a time limit and AC. Apparently, using pairs to do dfs with maps for visited array can TLE on 10^6 nodes. (see problem C https://codeforces.com/contest/374/my)
+3. When there are only two paths in a grid possible (up and right OR down and right) and so on, consider using a nested for loop instead of bfs type queue to iterate over all elements in order.
 
 # TODO:
 

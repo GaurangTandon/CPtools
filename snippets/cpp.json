@@ -1044,14 +1044,14 @@
     "seg tree basic stuff": {
         "prefix": "segtree",
         "body": [
-            "void build(v &tree, v &arr, ll rL, ll rR, ll idx, ll treeIdx) {",
+            "void build(v &tree, v &arr, ll rL, ll rR, ll treeIdx) {",
             "    if (rL == rR) {",
-            "        tree[treeIdx] = arr[idx];",
+            "        tree[treeIdx] = arr[rL];",
             "    } else {",
             "        ll mid = rL + rR;",
             "        mid >>= 1;",
-            "        build(tree, arr, rL, mid, idx, treeIdx << 1);",
-            "        build(tree, arr, mid + 1, rR, idx, (treeIdx << 1) | 1);",
+            "        build(tree, arr, rL, mid, treeIdx << 1);",
+            "        build(tree, arr, mid + 1, rR, (treeIdx << 1) | 1);",
             "        tree[treeIdx] = max(tree[treeIdx << 1], tree[(treeIdx << 1) | 1]);",
             "    }",
             "}",
