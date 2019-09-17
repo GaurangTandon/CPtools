@@ -143,6 +143,7 @@ Read more compilation options on [this page](https://gcc.gnu.org/onlinedocs/gcc/
 ## General algo
 
 1. **Stackoverflow**: The recursion stack is limited to around 350,000 on an average machine. This solution won't TLE, but will give a memory limit exceeded error. You'll get an error similar to `SIGSEGV: Invalid memory reference`, and in gdb, you will get the line number as the start of the method header. In general, avoid using recursion for such large cases, use iteration instead.
+2. When value of `n` is very large, try to come up with some patterns for lower values of `n` using brute force or dp. Like [this question](https://codeforces.com/gym/101612) can be solved in constant time, however, the formula is not immediately obvious. Use DP to observe a pattern. See my A.cpp submission.
 
 ## Bit manipulation
 
@@ -167,3 +168,23 @@ Read more compilation options on [this page](https://gcc.gnu.org/onlinedocs/gcc/
 # TODO:
 
 1. Create snippet for cumulative sum of 2d array,
+
+## WTF
+
+1. How to check for overflow in long long consecutive products? Why did this happen? https://codeforces.com/group/K3Zd1r0QSA/contest/101612/submission/60599572 -_-
+                                
+                                ```
+                                bool of = false;
+                                ll x = 1;
+
+                                for (auto mult : prods) {
+                                    if (x > (ld)1e18 / mult) {
+                                        of = true;
+                                        break;
+                                    }
+                                    x *= mult;
+                                }
+                                ```
+
+2. `log10(999999999999996448.0l)` is `18` :(
+3. Never output `pow(a,b)` directly. Always convert to `ll` before doing `cout`.

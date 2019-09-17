@@ -125,8 +125,10 @@
             "",
             "int main(void){",
             "    ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);",
+            // when you requre in/out files
+            "    ${1:freopen(\"file\", \"r\", stdin);\nfreopen(\"file\", \"w\", stdout);}",
             // when you require to use this line just uncomment it
-            "    ${1:// ll t;cin >> t;while(t--)}",
+            "    ${2:// ll t;cin >> t;while(t--)}",
             "    solve();",
             "    return 0;",
             "}"
