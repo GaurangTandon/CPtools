@@ -74,6 +74,7 @@ Read more compilation options on [this page](https://gcc.gnu.org/onlinedocs/gcc/
 
 1. Sorting a very large vector of pairs using a custom comparator function (`[](){}`) can cause TLE. [Example link](https://codeforces.com/contest/605/submission/54273199)
 2. Using `long long` instead of `int` can cause TLE. ![Example](https://i.imgur.com/im2FJPK.png)
+3. Using `pow(a, b)` is much much slower than using `1ll << power`, which is slightly slower than storing successive powers in a cumulative array, when used in a loop. (see submissions on D - https://codeforces.com/contest/1220/my)
 
 ## Causes for MLE
 
