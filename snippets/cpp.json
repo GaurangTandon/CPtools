@@ -109,15 +109,7 @@
             "    }",
             "    cout << endl;",
             "}",
-            "",
-            "template <typename T, typename A>",
-            "void papair(vector<T, A> const &a, ll begin = 0, ll end = -1){",
-            "    if(end == -1) end = sz(a) - 1;",
-            "    for(ll i = begin; i <= end; i++){",
-            "        // printf(\"%lu \", a[i]);",
-            "        cout << a[i].first << \" \" << a[i].second << endl;",
-            "    }",
-            "}",
+
             "",
             "void solve(){",
             "    ${0:// code}",
@@ -126,7 +118,7 @@
             "int main(void){",
             "    ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);",
             // when you requre in/out files
-            "    ${1:freopen(\"file\", \"r\", stdin);\nfreopen(\"file\", \"w\", stdout);}",
+            "    ${1:freopen(\"file\", \"r\", stdin);\n    freopen(\"file\", \"w\", stdout);}",
             // when you require to use this line just uncomment it
             "    ${2:// ll t;cin >> t;while(t--)}",
             "    solve();",

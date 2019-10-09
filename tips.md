@@ -122,12 +122,15 @@ Read more compilation options on [this page](https://gcc.gnu.org/onlinedocs/gcc/
 
 ## Floats
 
-1. Use epsilon when comparing floating point values, even when with ints. For example, 1e-10
+1. Use epsilon when comparing floating point values, even when with ints. Do not use anything less than 1e-6 unless absolutely sure. See the problem https://codeforces.com/group/K3Zd1r0QSA/contest/102343/submission/61050721 and previous two submissions.
+2. Be careful in python when using division and modulo together. Division `/` produces float values and modulo on float values gives very incorrect results. Always use `//` if using modulo (and cast 1e10 using `int`.)
 
 ## Strings
 
 1. Always check size of string before applying integer parsing functions. For example, don't pass strings of length greater than 18 to `stoull`.
 2. Use `<` or `>` when attempting lexicographical comparison. It is much better than writing a normal for loop for the same.
+3. If $n^2$ complexity is permitted, consider using tries instead of hashing. [Hashing can give wrong answer.](https://codeforces.com/contest/271/my)
+4. Inserting strings into set will give memory limit even if you use `int` and $n^2$ complexity is permitted. ([link](https://codeforces.com/contest/271/submission/62205689))
 
 ## Math
 
