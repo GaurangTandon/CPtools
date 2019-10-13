@@ -69,6 +69,7 @@ Read more compilation options on [this page](https://gcc.gnu.org/onlinedocs/gcc/
 
 8.  When using a function `newnode` to initialize a new struct pointer, note that values of arrays inside struct are not automatically initialized. So, `node->array[i]` is null. Hence, need to manually iniitialize each index of an array property. Else you get run error, [like here](https://codeforces.com/contest/514/submission/52626249).
 9.  If you get a run error in a line where you shouldn't, especially `free()` related errors, that means you have undefined behavior somewhere above in your file. Comment out parts of your file and run the debugger to understand where it is.
+10. **Instead of a binary search tree, if all insertions before all the queries, then please use 1d vector with binary search.**
 
 ## Causes for TLE
 

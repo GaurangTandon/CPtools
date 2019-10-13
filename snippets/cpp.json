@@ -1576,5 +1576,67 @@
             "     tree_order_statistics_node_update>",
             "ordered_set;"
         ]
+    },
+    "bfs ka snippet": {
+        "prefix": "bfs",
+        "body": [
+            "vb visited(n + 1, false);",
+            "v distances(n + 1, -1);",
+            "q.push({root, 0});",
+            "while (!q.empty()) {",
+            "    auto node = q.front();",
+            "    q.pop();",
+            "",
+            "    for (auto neigh : adjList[node.first]) {",
+            "        if (!visited[neigh]) {",
+            "            auto d = node.second + 1;",
+            "            q.push({neigh, d});",
+            "            visited[neigh] = 1;",
+            "        }",
+            "    }",
+            "}"
+        ]
+    },
+    "diameter of tree": {
+        "prefix": "bfsdiameter",
+        "body": [
+            "vb visited(n + 1, false);",
+            "v distances(n + 1, -1);",
+            "q.push({root, 0});",
+            "ll nodeMax = root, dMax = 0;",
+            "while (!q.empty()) {",
+            "    auto node = q.front();",
+            "    q.pop();",
+            "    if (node.second < dMax) {",
+            "        dMax = node.second;",
+            "        nodeMax = node.first;",
+            "    }",
+            "",
+            "    for (auto neigh : adjList[node.first]) {",
+            "        if (!visited[neigh]) {",
+            "            auto d = node.second + 1;",
+            "            q.push({neigh, d});",
+            "            visited[neigh] = 1;",
+            "        }",
+            "    }",
+            "}",
+            "visited = vb(n + 1, false);",
+            "q.push({nodeMax, 0});",
+            "dMax = 0;",
+            "while (!q.empty()) {",
+            "    auto node = q.front();",
+            "    q.pop();",
+            "",
+            "    amax(dMax, node.second);",
+            "",
+            "    for (auto neigh : adjList[node.first]) {",
+            "        if (!visited[neigh]) {",
+            "            auto d = node.second + 1;",
+            "            q.push({neigh, d});",
+            "            visited[neigh] = 1;",
+            "        }",
+            "    }",
+            "}"
+        ]
     }
 }
