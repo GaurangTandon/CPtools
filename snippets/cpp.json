@@ -1638,5 +1638,37 @@
             "    }",
             "}"
         ]
+    },
+    "number theory": {
+        "prefix": "numbertheory",
+        "body":[
+            "ll exgcd(ll a, ll b, ll &x, ll &y) {",
+            "  int g = a; x = 1, y = 0;",
+            "  if (b) g = exgcd(b, a % b, y, x), y -= a / b * x;",
+            "  return g;",
+            "}",
+            " ",
+            "ll inv(ll a, ll m) {",
+            "  ll x, y;",
+            "  exgcd(a, m, x, y);",
+            "  return (x + m) % m;",
+            "}"
+        ]
+    },
+    "binary search": {
+        "prefix": "binsearch",
+        "body": [
+            "ll b = 0, e = n - 1, ans = 1e15;",
+            "",
+            "while (b <= e) {",
+            "    ll m = (b + e) / 2;",
+            "    if (check(m)) {",
+            "        amin(ans, m);",
+            "        e = m - 1;",
+            "    } else {",
+            "        b = m + 1;",
+            "    }",
+            "}",
+        ]
     }
 }
