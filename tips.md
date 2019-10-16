@@ -70,6 +70,7 @@ Read more compilation options on [this page](https://gcc.gnu.org/onlinedocs/gcc/
 8.  When using a function `newnode` to initialize a new struct pointer, note that values of arrays inside struct are not automatically initialized. So, `node->array[i]` is null. Hence, need to manually iniitialize each index of an array property. Else you get run error, [like here](https://codeforces.com/contest/514/submission/52626249).
 9.  If you get a run error in a line where you shouldn't, especially `free()` related errors, that means you have undefined behavior somewhere above in your file. Comment out parts of your file and run the debugger to understand where it is.
 10. **Instead of a binary search tree, if all insertions before all the queries, then please use 1d vector with binary search.**
+11. If stuck and have a brute force, perform complexity analysis and it might even pass. (255C as well as 1229C)
 
 ## Causes for TLE
 
@@ -120,6 +121,10 @@ Read more compilation options on [this page](https://gcc.gnu.org/onlinedocs/gcc/
 ## Multisets
 
 1. `multiset.erase(value)` erases all copies of `value` in `multiset`. To delete just one value use `multiset.erase(multiset.find(value))` (but first ensure the value exists in multiset).
+
+## Integers
+
+1. Maximizing greedy consumptions occurs best in greedy space, consider modular groups always. (see 1244C - number theory solution)
 
 ## Floats
 
