@@ -71,6 +71,7 @@
             // so we can easily do sort(whole(x))
             // instead of sort(x.begin(), x.end())
             "#define all(x) x.begin(), x.end()",
+            "#define rall(x) x.rbegin(), x.rend()",
             // for string to primitive conversions, use
             // stold, stod, stof, stoi, stol, stoll, stoul, stoull
             "",
