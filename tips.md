@@ -71,6 +71,7 @@ Read more compilation options on [this page](https://gcc.gnu.org/onlinedocs/gcc/
 9.  If you get a run error in a line where you shouldn't, especially `free()` related errors, that means you have undefined behavior somewhere above in your file. Comment out parts of your file and run the debugger to understand where it is.
 10. **Instead of a binary search tree, if all insertions before all the queries, then please use 1d vector with binary search.**
 11. If stuck and have a brute force, perform complexity analysis and it might even pass. (255C as well as 1229C)
+12. If you have range queries and point updates, but the updates are offline (all queries occur after all updates), then consider using the "library question" approach (checkposts waala).
 
 ## Causes for TLE
 
