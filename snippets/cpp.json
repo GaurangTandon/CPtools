@@ -2068,5 +2068,28 @@
              "    }",
              "};"
         ]
+    },
+    "dfs tree": {
+        "prefix": "dfstree",
+        "body": [
+            "#define MAX (ll)3e5",
+            "",
+            "void dfs(vv &adjList, ll curr, ll prev) {",
+            "    dp[curr][0] = 1;",
+            "    dp[curr][1] = 1;",
+            "",
+            "    for (auto neigh : adjList[curr]) {",
+            "        if (neigh == prev)",
+            "            continue;",
+            "        dfs(adjList, neigh, curr);",
+            "        // the only way to paint the root black is to paint its chidlren white",
+            "        dp[curr][0] *= dp[neigh][1];",
+            "        // otherwise it's baap ka raj",
+            "        dp[curr][1] *= (dp[neigh][0] + dp[neigh][1]);",
+            "        dp[curr][0] %= MOD;",
+            "        dp[curr][1] %= MOD;",
+            "    }",
+            "}",
+        ]
     }
 }
