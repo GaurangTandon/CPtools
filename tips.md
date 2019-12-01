@@ -180,6 +180,17 @@ Read more compilation options on [this page](https://gcc.gnu.org/onlinedocs/gcc/
 
 1. Create snippet for cumulative sum of 2d array,
 
+# Specific kinds of problems
+
+## Problems where the complement graph is inputted
+
+1242B, 190E
+
+Approaches:
+
+1. DFS using a set that keeps self-deleting: this TLEd on 190E so go with DSU approach
+2. DSU (I didn't understand this approach :/ explained in editorial of 1242B)
+
 ## WTF
 
 1. How to check for overflow in long long consecutive products? Why did this happen? https://codeforces.com/group/K3Zd1r0QSA/contest/101612/submission/60599572 -_-

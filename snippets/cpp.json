@@ -28,9 +28,7 @@
             "typedef long double ld;",
             // prefer to use the first definition
             "typedef vector<ll> v;",
-            "typedef vector<lu> vu;",
             "typedef vector<v> vv;",
-            "typedef vector<vu> vvu;",
             "typedef vector<ld> vld;",
             "typedef vector<bool> vb;",
             "typedef vector<string> vs;",
@@ -39,9 +37,7 @@
             "typedef set<pair<ll,ll>> spll;",
             "typedef vector<spll> vspll;", // for weighted adjacency list
             "typedef vector<pll> vpll;",
-            "typedef pair<lu,lu> puu;",
-            "typedef vector<puu> vpuu;",
-            "const ll MOD = 1000000007;",
+            "const ll MOD = 1e9 + 7;",
             "const ld PI = 2 * acos(0.0);",
             "const v dx = {1, -1, 0, 0};",
             "const v dy = {0, 0, 1, -1};",
@@ -49,7 +45,7 @@
             // no need to cast into long double and
             // then call ceil, then cast  back into int
             // x,y must be ints though
-            "#define round(x, y) ((x+y-1)/y)",
+            "#define round(x, y) ((2*x+y)/(2*y))",
             "#define ce(x, y) ((x+y-1)/y)",
             "#define amax(x, y) if(y > x) x = y;",
             "#define amin(x, y) if(y < x) x = y;",
@@ -1279,18 +1275,20 @@
             "// -1 indicates DNE",
             "ll lim = 32;",
             "vv parents(3e5, v(lim, -1));",
+            "v levels(3e5, 0);",
             "",
-            "void dfs2(ll curr = 1, ll prev = -1, ll depth = 1) {",
+            "void dfs2(vv &adjList, ll curr = 1, ll prev = -1, ll depth = 1) {",
             "    levels[curr] = depth;",
             "    for (auto neigh : adjList[curr]) {",
             "        if (neigh == prev)",
             "            continue;",
             "        parents[neigh][0] = curr;",
-            "        dfs2(neigh, curr, depth + 1);",
+            "        dfs2(adjList, neigh, curr, depth + 1);",
             "    }",
             "}",
             "",
-            "void buildparents() {",
+            "void buildparents(vv &adjList, ll n) {",
+            "    dfs2(adjList);",
             "    for (ll power = 1; power < lim; power++) {",
             "        for (ll node = 1; node <= n; node++) {",
             "            ll halfway = parents[node][power - 1];",
@@ -1328,7 +1326,7 @@
             "        }",
             "    }",
             "    return parents[n1][0];",
-            "}"
+            "}",
         ]
     },
     "line container": {
@@ -1566,12 +1564,14 @@
     "bfs ka snippet": {
         "prefix": "bfs",
         "body": [
+            "queue<pll> q;",
             "vb visited(n + 1, false);",
             "v distances(n + 1, -1);",
             "q.push({root, 0});",
             "while (!q.empty()) {",
             "    auto node = q.front();",
             "    q.pop();",
+            "    distances[node.first] = node.second;",
             "",
             "    for (auto neigh : adjList[node.first]) {",
             "        if (!visited[neigh]) {",
@@ -2074,7 +2074,7 @@
         "body": [
             "#define MAX (ll)3e5",
             "",
-            "void dfs(vv &adjList, ll curr, ll prev) {",
+            "void dfs(vv &adjList, ll curr = 1, ll prev = -1) {",
             "    for (auto neigh : adjList[curr]) {",
             "        if (neigh == prev)",
             "            continue;",
