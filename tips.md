@@ -196,6 +196,11 @@ Approaches:
 Listen. Using `unordered_map` instead will usually **NOT** fix your problem. Instead, focus on reworking your logic a bit so that you can get an AC. See problem 102411M (AC https://codeforces.com/gym/102411/submission/66275452).
 Also, see https://codeforces.com/blog/entry/60737 but you probably won't ever need it.
 
+## SPOJ TIPS
+
+1. If problem says "Round answer to 6 decimal digits", it actually wants you to print exactly six decimal digits and not more! So, for your final answer, do `ans = std::round(1e6 * ans) / 1e6` and use `setprecision(6)`.
+2. SPOJ always runs on all tests first and only then gives the verdict. So, it may be possible that you see "running (12)" even though your code failed on first test itself.
+
 ## WTF
 
 1. How to check for overflow in long long consecutive products? Why did this happen? https://codeforces.com/group/K3Zd1r0QSA/contest/101612/submission/60599572 -_-
