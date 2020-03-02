@@ -40,6 +40,10 @@ To enable O2 anyway, since you don't get the command line for yourself, you can 
 
 Read more compilation options on [this page](https://gcc.gnu.org/onlinedocs/gcc/Optimize-Options.html#index-Ofast). How do the first and last line actually work?
 
+## Time limit exceeded TLE
+
+1. Converting the object syntax (like the one in prime sieve `Multiplicative`) into simple array based globals can actually help increase speed by over 0.2s, useful in problems like this one https://www.codechef.com/problems/LCM where TL is too tight
+
 ## General coding
 
 1.  Decide upon some standard variable names. Like, `a` for arrays, prefix sum array as `sum`, `s` for strings, etc. Avoid longer names. At max, competitive code has only six distinct variables in any scope, so there can't/shouldn't be much confusion.
@@ -78,6 +82,8 @@ Read more compilation options on [this page](https://gcc.gnu.org/onlinedocs/gcc/
 1. Sorting a very large vector of pairs using a custom comparator function (`[](){}`) can cause TLE. [Example link](https://codeforces.com/contest/605/submission/54273199)
 2. Using `long long` instead of `int` can cause TLE. ![Example](https://i.imgur.com/im2FJPK.png)
 3. Using `pow(a, b)` is much much slower than using `1ll << power`, which is slightly slower than storing successive powers in a cumulative array, when used in a loop. (see submissions on D - https://codeforces.com/contest/1220/my)
+4. Using a set of strings (`set<string>`) can give TLE in a lot of cases. Perform lots of optimizations in the code if you plan to use such a set. For example, an n^2 loop should be done in $n^2/2$ instead. Try to reduce number of other things being used, basically, think for two minutes and make it as optimized as possible. There is a very high possibility you will get TLE if you do not do this ([TLE](https://codeforces.com/contest/1287/submission/68256873) and [AC](https://codeforces.com/contest/1287/submission/68280463)). 
+   1. Another example for $n^2$ TLE is [270807A](https://codeforces.com/gym/270807/submission/72146495).
 
 ## Causes for MLE
 
@@ -143,13 +149,8 @@ Read more compilation options on [this page](https://gcc.gnu.org/onlinedocs/gcc/
 
 1. `std::pow` is a constant time operation. See [SO](https://stackoverflow.com/q/13418180) and [code submission](https://codeforces.com/contest/453/submission/55961090) that passes on Codeforces.
 2. Do not use `multmod` as far as possible because it can lead to time limit.
-3. For taking modulo, the following always works:
-
-    ```c++
-    ll modder(ll value) {
-        return ((value % MOD) + MOD) % MOD;
-    }
-    ```
+3. For taking modulo, the following always works: `((value % MOD) + MOD) % MOD`
+4. If mod value `= 1ll << 30`, (or any power of 2), then taking mod is not necessary as it will overflow on its own and adjust accordingly. (use unsigned int if necessary). In fact, doing `(1ll * a * b) % mod` will slow your code down.
 
 ## General algo
 
