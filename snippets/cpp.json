@@ -33,9 +33,6 @@
             "typedef vector<bool> vb;",
             "typedef vector<string> vs;",
             "typedef pair<ll,ll> pll;",
-            "typedef vector<set<ll>> vsll;", // for adjacency list
-            "typedef set<pair<ll,ll>> spll;",
-            "typedef vector<spll> vspll;", // for weighted adjacency list
             "typedef vector<pll> vpll;",
             "const ll MOD = 1e9 + 7;",
             "const v dx = {1, -1, 0, 0};",
@@ -51,11 +48,9 @@
             "       yes else no;",
             "#define noo \\",
             "{ no return; }",
-            "#define round(x, y) ((2*x+y)/(2*y))",
             "#define ce(x, y) ((x+y-1)/y)",
             "#define amax(x, y) if(y > x) x = y;",
             "#define amin(x, y) if(y < x) x = y;",
-            "#define lcm(x, y) ((x) * (y) / __gcd(x, y))",
             // stupid seg fault for x.size() - 1 overflowing for empty x as x.size() is always unsigned
             "#define sz(x) (ll)x.size()",
             // useful when taking squares and cubes of larger expressions
@@ -97,9 +92,6 @@
             "",
             "int main(void){",
             "    ios::sync_with_stdio(false); cin.tie(nullptr); cout.tie(nullptr);",
-            // when you requre in/out files
-            "    //${1:freopen(\"file\", \"r\", stdin);\n    //freopen(\"file\", \"w\", stdout);}",
-            // when you require to use this line just uncomment it
             "    ${2:// ll t;cin >> t;while(t--)}",
             "    solve();",
             "    return 0;",
