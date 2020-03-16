@@ -201,6 +201,7 @@ Also, see https://codeforces.com/blog/entry/60737 but you probably won't ever ne
 
 1. If problem says "Round answer to 6 decimal digits", it actually wants you to print exactly six decimal digits and not more! So, for your final answer, do `ans = std::round(1e6 * ans) / 1e6` and use `setprecision(6)`.
 2. SPOJ always runs on all tests first and only then gives the verdict. So, it may be possible that you see "running (12)" even though your code failed on first test itself.
+3. Python 2 is on SPOJ, and it uses `raw_input` instead of `input`.
 
 ## WTF
 

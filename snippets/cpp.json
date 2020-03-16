@@ -48,7 +48,6 @@
             "       yes else no;",
             "#define noo \\",
             "{ no return; }",
-            "#define ce(x, y) ((x+y-1)/y)",
             "#define amax(x, y) if(y > x) x = y;",
             "#define amin(x, y) if(y < x) x = y;",
             // stupid seg fault for x.size() - 1 overflowing for empty x as x.size() is always unsigned
