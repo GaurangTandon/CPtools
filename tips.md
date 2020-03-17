@@ -132,6 +132,7 @@ Read more compilation options on [this page](https://gcc.gnu.org/onlinedocs/gcc/
 ## Integers
 
 1. Maximizing greedy consumptions occurs best in greedy space, consider modular groups always. (see 1244C - number theory solution)
+2. Never print `!integer` directly in codeforces, instead of printing 0 or 1, have faced wrong answer (https://codeforces.com/contest/1010/submission/73504640), instead first assign to boolean and then apply ternary like this (https://codeforces.com/contest/1010/submission/73501156)
 
 ## Floats
 
