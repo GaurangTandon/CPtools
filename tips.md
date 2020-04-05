@@ -43,6 +43,7 @@ Read more compilation options on [this page](https://gcc.gnu.org/onlinedocs/gcc/
 ## Time limit exceeded TLE
 
 1. Converting the object syntax (like the one in prime sieve `Multiplicative`) into simple array based globals can actually help increase speed by over 0.2s, useful in problems like this one https://www.codechef.com/problems/LCM where TL is too tight
+2. It is helpful to convert a digit segment tree into actual parts (vv tree[len][dig_count]) and can help improve time. Also, avoid returning more than a pair in query function of segment tree. Even sorting a vector of length 4 can result in tle! (tl: https://codeforces.com/contest/1217/submission/74391601, ac: https://codeforces.com/contest/1217/submission/74392081)
 
 ## General coding
 
@@ -152,6 +153,7 @@ Read more compilation options on [this page](https://gcc.gnu.org/onlinedocs/gcc/
 2. Do not use `multmod` as far as possible because it can lead to time limit.
 3. For taking modulo, the following always works: `((value % MOD) + MOD) % MOD`
 4. If mod value `= 1ll << 30`, (or any power of 2), then taking mod is not necessary as it will overflow on its own and adjust accordingly. (use unsigned int if necessary). In fact, doing `(1ll * a * b) % mod` will slow your code down.
+5. When taking sqrt of very large numbers (10\*\*18), always verify that if `(int) x = sqrt(N)`, then `x * x <= N`, because, of these things: `sqrt((ll) (1e16-1)) = 1e8` (can check it's true)
 
 ## General algo
 
