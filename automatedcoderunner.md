@@ -1,4 +1,4 @@
-# Setting up single key press code execution
+# Setting up single key press code execution in VS Code
 
 ## Prequisites:
 

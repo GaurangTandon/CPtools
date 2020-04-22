@@ -30,6 +30,8 @@ Tips are separated by categories
 
 ## Compilation
 
+To enable 2x faster compilation, setup a precompiled header in your `bits` directory. In my case, it is located at `/usr/include/x86_64-linux-gnu/c++/7/bits`. `cd` into it and simply compile the stdc++.h file (`g++ stdc++.h`). You should now have a `stdc++.h.gch` file. Enjoy! ([more info](https://gcc.gnu.org/onlinedocs/gcc/Precompiled-Headers.html))
+
 Don't use the `-O2` flag for compilation by default. It takes more time to compile and it enables several optimizations, but it demolishes the `print <local_variable>` output that is otherwise available in GDB. Interestingly, codeforces.com [already compiles](https://codeforces.com/blog/entry/79) the files with `-O2` flag.
 
 To enable O2 anyway, since you don't get the command line for yourself, you can use pragma directives. The lines to stick at the top are:
@@ -43,15 +45,13 @@ Read more compilation options on [this page](https://gcc.gnu.org/onlinedocs/gcc/
 ## Time limit exceeded TLE
 
 1. Converting the object syntax (like the one in prime sieve `Multiplicative`) into simple array based globals can actually help increase speed by over 0.2s, useful in problems like this one https://www.codechef.com/problems/LCM where TL is too tight
-2. It is helpful to convert a digit segment tree into actual parts (vv tree[len][dig_count]) and can help improve time. Also, avoid returning more than a pair in query function of segment tree. Even sorting a vector of length 4 can result in tle! (tl: https://codeforces.com/contest/1217/submission/74391601, ac: https://codeforces.com/contest/1217/submission/74392081)
+2. It is helpful to convert a digit segment tree into actual parts (`vv tree[len][dig_count]`) and can help improve time. Also, avoid returning more than a pair in query function of segment tree. Even sorting a vector of length 4 can result in tle! (tl: https://codeforces.com/contest/1217/submission/74391601, ac: https://codeforces.com/contest/1217/submission/74392081)
 
 ## General coding
 
 1.  Decide upon some standard variable names. Like, `a` for arrays, prefix sum array as `sum`, `s` for strings, etc. Avoid longer names. At max, competitive code has only six distinct variables in any scope, so there can't/shouldn't be much confusion.
 2.  Use vectors if you're using C++. There's no reason to not use vectors when they are available. They are not only [as fast as plain arrays](https://stackoverflow.com/questions/26189531/how-is-stdvector-faster-than-a-plain-array), but are also dynamically sized with constant access time. They also allow sorting operations, any index insertion/deletion, etc. on them.
-3.  Avoid `int`s in your code. There's no reason to use `int`s when `long long int` are available, which do the same task and also avoid the occassional overflow problem that you might forget to take care of.
-4.  Use as many keybindings, snippets, etc. as you can during the contest. Make your text editor your own.
-5.  It is recommended to avoid writing functions that return more than one value, as it leads to harder debugging. However, this may sometimes be desirable, for example to return index of first occurrence of string that begins with "a", and the string itself. So, you can use `std::tie` and `std::tuple` for that.
+3.  It is recommended to avoid writing functions that return more than one value, as it leads to harder debugging. However, this may sometimes be desirable, for example to return index of first occurrence of string that begins with "a", and the string itself. So, you can use `std::tie` and `std::tuple` for that.
 
         tuple<int, string> f(params) {
             // do some searching
@@ -63,8 +63,8 @@ Read more compilation options on [this page](https://gcc.gnu.org/onlinedocs/gcc/
             tie(idx, found) = f(params);
         }
 
-6.  **Use of auto-keyword:** Instead of `set<pair<int, pair<int, int>>>::iterator` you can simply do `auto it = s.begin()`
-7.  To exclude some code from executing in online judge (C++), you can use this:
+4.  **Use of auto-keyword:** Instead of `set<pair<int, pair<int, int>>>::iterator` you can simply do `auto it = s.begin()`
+5.  To exclude some code from executing in online judge (C++), you can use this:
 
         #ifndef ONLINE_JUDGE
         //code that should not execute in ONLINE JUDGE
@@ -73,7 +73,7 @@ Read more compilation options on [this page](https://gcc.gnu.org/onlinedocs/gcc/
         #endif
 
 8.  When using a function `newnode` to initialize a new struct pointer, note that values of arrays inside struct are not automatically initialized. So, `node->array[i]` is null. Hence, need to manually iniitialize each index of an array property. Else you get run error, [like here](https://codeforces.com/contest/514/submission/52626249).
-9.  If you get a run error in a line where you shouldn't, especially `free()` related errors, that means you have undefined behavior somewhere above in your file. Comment out parts of your file and run the debugger to understand where it is.
+9.  If you get a run error in a line where you shouldn't, especially `free()` related errors, that means you have undefined behavior somewhere above in your file. Compile with fsanitize debugging flags to find the problem.
 10. **Instead of a binary search tree, if all insertions before all the queries, then please use 1d vector with binary search.**
 11. If stuck and have a brute force, perform complexity analysis and it might even pass. (255C as well as 1229C)
 12. If you have range queries and point updates, but the updates are offline (all queries occur after all updates), then consider using the "library question" approach (checkposts waala).
@@ -93,12 +93,11 @@ Read more compilation options on [this page](https://gcc.gnu.org/onlinedocs/gcc/
 ## IO
 
 1. When using `scanf`, always use `%llu` or `%lld` to take integer inputs. On codeforces custom invocation you can check that using `%lf` or `%f` to take integer inputs assigns it a value 0.000000.
-2. Prefer `cin`/`cout` as far as possible over `scanf`/`printf`. With sync with stdio disabled, they're as fast as or even faster than the c analogs. Also, taking string input with cin is super easy. You might only need printf when formatting your long double answer to six decimal places, which is a bit messed up in cout.
+2. Prefer `cin`/`cout` as far as possible over `scanf`/`printf`. With sync with stdio disabled, they're as fast as or even faster than the c analogs. Also, taking string input with cin is super easy.
 3. Do not mix `cin`/`cout` with `scanf`/`printf`/`getchar` when sync with stdio is disabled.
 
 ## Using vectors
 
-1.  Make sure your index variable - with which you are looping over a vector - is bounded till the size of the vector. C++ fails without any warning in case of that, gives undefined behavior.
 2.  Use `emplace_back` instead of `push_back` for [marked performance improvement](https://stackoverflow.com/questions/26860749/efficiency-of-c11-push-back-with-stdmove-versus-emplace-back-for-already). The bug (mainly typesafety) involved with emplace_back is not our concern in CP ([post](https://stackoverflow.com/questions/10890653/why-would-i-ever-use-push-back-instead-of-emplace-back/28435599)).
 3.  Always pass large vectors, especially large 2D vectors (think `1000x1000`), to methods using the ampersand argument format. Also, if the total number of elements exceeds `10^6`, declare them globally and convert from `lu` to possibly `int` or `long int`. Otherwise you will get MLE.
 4.  Always initialize very large vectors outside of your main loop. For example, the time complexity of the following program is `O(n * k)`, which will TLE if n and k are both very large:
@@ -172,17 +171,13 @@ Read more compilation options on [this page](https://gcc.gnu.org/onlinedocs/gcc/
 ## Codechef
 
 1. When you receive an invalid answer output from an interactive problem, you should immediately terminate your program to receive a Wrong Answer verdict; otherwise, you may receive any verdict.
-2. Don't forget to flush the output after printing each line!
+2. Don't forget to flush the output after printing each line! (`cout.flush();`)
 
 ## Graphs
 
 1. Kosaraju's algo works better with stacks than with toposort. See [failed toposort](https://codeforces.com/contest/427/submission/55713667) and [accepted stacks](https://codeforces.com/contest/427/submission/55713974) solution.
 2. `dfs` in a 2d grid: do not use pairs to keep track of coords and a `map<pll, bool> visited`.  Instead use `vector<vb> visited(1000, vb(1000,false))` and `x,y` separated arguments to do `dfs`. This can be the difference of a time limit and AC. Apparently, using pairs to do dfs with maps for visited array can TLE on 10^6 nodes. (see problem C https://codeforces.com/contest/374/my)
 3. When there are only two paths in a grid possible (up and right OR down and right) and so on, consider using a nested for loop instead of bfs type queue to iterate over all elements in order.
-
-# TODO:
-
-1. Create snippet for cumulative sum of 2d array,
 
 # Specific kinds of problems
 
@@ -197,7 +192,7 @@ Approaches:
 
 ## Problems with `map` giving TLE
 
-Listen. Using `unordered_map` instead will usually **NOT** fix your problem. Instead, focus on reworking your logic a bit so that you can get an AC. See problem 102411M (AC https://codeforces.com/gym/102411/submission/66275452).
+Using `unordered_map` instead will usually **NOT** fix your problem. Instead, focus on reworking your logic a bit so that you can get an AC. See problem 102411M (AC https://codeforces.com/gym/102411/submission/66275452).
 Also, see https://codeforces.com/blog/entry/60737 but you probably won't ever need it.
 
 ## SPOJ TIPS
@@ -210,18 +205,18 @@ Also, see https://codeforces.com/blog/entry/60737 but you probably won't ever ne
 
 1. How to check for overflow in long long consecutive products? Why did this happen? https://codeforces.com/group/K3Zd1r0QSA/contest/101612/submission/60599572 -_-
                                 
-                                ```
-                                bool of = false;
-                                ll x = 1;
+                ```
+                bool of = false;
+                ll x = 1;
 
-                                for (auto mult : prods) {
-                                    if (x > (ld)1e18 / mult) {
-                                        of = true;
-                                        break;
-                                    }
-                                    x *= mult;
-                                }
-                                ```
+                for (auto mult : prods) {
+                    if (x > (ld)1e18 / mult) {
+                        of = true;
+                        break;
+                    }
+                    x *= mult;
+                }
+                ```
 
 2. `log10(999999999999996448.0l)` is `18` :(
 3. Never output `pow(a,b)` directly. Always convert to `ll` before doing `cout`.
