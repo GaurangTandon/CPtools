@@ -85,6 +85,7 @@ Read more compilation options on [this page](https://gcc.gnu.org/onlinedocs/gcc/
 3. Using `pow(a, b)` is much much slower than using `1ll << power`, which is slightly slower than storing successive powers in a cumulative array, when used in a loop. (see submissions on D - https://codeforces.com/contest/1220/my)
 4. Using a set of strings (`set<string>`) can give TLE in a lot of cases. Perform lots of optimizations in the code if you plan to use such a set. For example, an n^2 loop should be done in $n^2/2$ instead. Try to reduce number of other things being used, basically, think for two minutes and make it as optimized as possible. There is a very high possibility you will get TLE if you do not do this ([TLE](https://codeforces.com/contest/1287/submission/68256873) and [AC](https://codeforces.com/contest/1287/submission/68280463)). 
    1. Another example for $n^2$ TLE is [270807A](https://codeforces.com/gym/270807/submission/72146495).
+5. Using binary search with sets results in a log^2n factor and can lead to TLE. [Example submission](https://codeforces.com/contest/514/submission/79273659). Use **two pointer** approach to AC such questions wherever possible ([submission](https://codeforces.com/contest/514/submission/79274584))
 
 ## Causes for MLE
 
