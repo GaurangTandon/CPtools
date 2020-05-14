@@ -2,35 +2,32 @@
 
 Tips are separated by categories
 
-## Contest
+## Interactive problems
 
-1. First read C problem and attempt to solve it, as it gives more poins, since fewer people had solved it. Case in point: [Contest 520](https://codeforces.com/contest/1062) had problem C only slightly tougher than problem A, and problem D was way easier than both B and C.
+### **Checking interactive problems**
 
-2. Be good at coming up with self test cases. Just because your code passes the pretests doesn't mean it will pass the system tests.
+There is already a [script](https://storage.googleapis.com/coding-competitions.appspot.com/interactive_runner.py) provided (by [Google here](https://codingcompetitions.withgoogle.com/codejam/faq?#interactive-problems)). Usage instructions are inside the script. Of course, though, you would have to write the judge script too when using this, not just the solution.
 
-3. **Hightail**: is a program that scrapes and downloads sample test cases from a problem/contest, and then can run your executable against that problem. Use it to quickly determine if your program passes the given inputs.
+To be fair, in general it is far easier for you to "be the judge yourself" and simulate the judging process, rather than writing out the judge from scratch. Most of the time you can find the mistake in your code that way.
 
-4. **Checking interactive problems**: is tricky. For C++, you can however achieve that as follows.
+### Flushing methods
 
-    1. You first need to write both a `solution.cpp` and then a `grader.cpp` that verifies if the solution is correct.
-    2. Then, execute the compiled executables like so:
+1. `cout.flush()` in C++
+2. <Add more>
 
-        mkfifo myfifo
-        ./grader < myfifo | ./solution > myfifo
+## Compilation tricks
 
-        `mkfifo` creates a named fifo (`myfifo` in this case) which we can use for queuing the output of `solution` into the `grader`. One small problem is that you cannot view the contents of `myfifo` unless you close the output connection, which I do not know how to.
-        So, you can simply write the output to a separate file via an `ofstream` (use `sol.txt` for one and `grad.txt` for another)
+### Fixing undefined behavior
 
-## Hacking
+Using this compilation command (note the flags): `g++ -fsanitize=address -fsanitize=undefined -D_GLIBCXX_DEBUG file.cpp`, you can catch out-of-bounds index accesses at runtime. So, you will get an error for them and they will not pass undetected.
 
-1. Only get down to hack problems once you have actually read all problems in the contest and made sure that you cannot solve them. In general, for div 2 problems, all problems without trees can be solved pretty easily.
-   Case in point: [Contest 520](https://codeforces.com/contest/1062) had first four very easy problems, as opposed to generally two in usual div2 contests.
-2. Attempt to hack those solutions which took less than five minutes to accepted. In general, they have a silly logic mistake that enables them to submit faster but incorrectly.
-   Example: [this hacked solution](https://codeforces.com/contest/1062/hacks/502444/) was submitted in two minutes.
+For example, try catching the error in [this code](https://codeforces.com/blog/entry/75082?#comment-591976) with and without the above compilation flags, and you'll see the difference yourself :)
 
-## Compilation
+### Precompiled header 
 
-To enable 2x faster compilation, setup a precompiled header in your `bits` directory. In my case, it is located at `/usr/include/x86_64-linux-gnu/c++/7/bits`. `cd` into it and simply compile the stdc++.h file (`g++ stdc++.h`). You should now have a `stdc++.h.gch` file. Enjoy! ([more info](https://gcc.gnu.org/onlinedocs/gcc/Precompiled-Headers.html))
+To enable 2x faster compilation, setup a precompiled header in your `bits` directory. In Ubuntu, it is usually located at `/usr/include/x86_64-linux-gnu/c++/7/bits`. `cd` into it and simply compile the stdc++.h file (`g++ stdc++.h`). You should now have a `stdc++.h.gch` file. Enjoy! ([more info](https://gcc.gnu.org/onlinedocs/gcc/Precompiled-Headers.html))
+
+### Do not use O2 flag
 
 Don't use the `-O2` flag for compilation by default. It takes more time to compile and it enables several optimizations, but it demolishes the `print <local_variable>` output that is otherwise available in GDB. Interestingly, codeforces.com [already compiles](https://codeforces.com/blog/entry/79) the files with `-O2` flag.
 
@@ -42,10 +39,19 @@ To enable O2 anyway, since you don't get the command line for yourself, you can 
 
 Read more compilation options on [this page](https://gcc.gnu.org/onlinedocs/gcc/Optimize-Options.html#index-Ofast). How do the first and last line actually work?
 
-## Time limit exceeded TLE
+## Fixing Time Limit Exceeded
 
-1. Converting the object syntax (like the one in prime sieve `Multiplicative`) into simple array based globals can actually help increase speed by over 0.2s, useful in problems like this one https://www.codechef.com/problems/LCM where TL is too tight
-2. It is helpful to convert a digit segment tree into actual parts (`vv tree[len][dig_count]`) and can help improve time. Also, avoid returning more than a pair in query function of segment tree. Even sorting a vector of length 4 can result in tle! (tl: https://codeforces.com/contest/1217/submission/74391601, ac: https://codeforces.com/contest/1217/submission/74392081)
+### Using int throughout
+
+In several questions where time limit is tight and you need to perform several modulo operations, using `long long` datatype can increase your time and memory taken by factor of 2. Most questions can be solved with int type in general. Here is [one code](https://www.codechef.com/viewsolution/31263439) for example, that efficiently mixes `int` and `long long` datatype.
+
+### Digit segment tree
+
+Converting a digit segment tree into actual parts (`int tree[len][dig_count]`) reduces time taken significantly.  
+
+### Query function of segment tree
+
+Avoid returning more than a pair in query function of segment tree. Even sorting a vector of length 4 can result in tle! ([tl code](https://codeforces.com/contest/1217/submission/74391601), [ac](https://codeforces.com/contest/1217/submission/74392081))
 
 ## General coding
 
