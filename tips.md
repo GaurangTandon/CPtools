@@ -53,46 +53,67 @@ Converting a digit segment tree into actual parts (`int tree[len][dig_count]`) r
 
 Avoid returning more than a pair in query function of segment tree. Even sorting a vector of length 4 can result in tle! ([tl code](https://codeforces.com/contest/1217/submission/74391601), [ac](https://codeforces.com/contest/1217/submission/74392081))
 
+### Other miscellaneous problems
+
+1. Sorting a very large vector of pairs using a custom comparator function can cause TLE. [Example link](https://codeforces.com/contest/605/submission/54273199)
+2. Using `long long` instead of `int` can cause TLE. ![Example](https://i.imgur.com/im2FJPK.png)
+3. Using a set of strings (`set<string>`) can give TLE in a lot of cases. Perform lots of optimizations in the code if you plan to use such a set. For example, an n^2 loop should be done in $n^2/2$ instead. Try to reduce number of other things being used, basically, think for two minutes and make it as optimized as possible. There is a very high possibility you will get TLE if you do not do this ([TLE](https://codeforces.com/contest/1287/submission/68256873) and [AC](https://codeforces.com/contest/1287/submission/68280463)). 
+   1. Another example for $n^2$ TLE is [270807A](https://codeforces.com/gym/270807/submission/72146495).
+4. Using binary search with sets results in a $\log^2n$ factor and can lead to TLE. [Example submission](https://codeforces.com/contest/514/submission/79273659). Use **two pointer** approach to AC such questions wherever possible ([submission](https://codeforces.com/contest/514/submission/79274584))
+
 ## General coding
 
-1.  **Use of auto-keyword:** Instead of `set<pair<int, pair<int, int>>>::iterator` you can simply do `auto it = s.begin()`, similarly, instead of `vector<int> row = grid[index]` you can simply do `auto row = grid[index]`
-5.  To exclude some code from executing in online judge (C++), you can use this:
+### Use of auto-keyword
 
-        #ifndef ONLINE_JUDGE
-        //code that should not execute in ONLINE JUDGE
-        #else
-        //code that should execute in ONLINE JUDGE
-        #endif
+Instead of `set<pair<int, pair<int, int>>>::iterator` you can simply do `auto it = s.begin()`, similarly, instead of `vector<int> row = grid[index]` you can simply do `auto row = grid[index]`
 
-8.  When using a function `newnode` to initialize a new struct pointer, note that values of arrays inside struct are not automatically initialized. So, `node->array[i]` is null. Hence, need to manually iniitialize each index of an array property. Else you get run error, [like here](https://codeforces.com/contest/514/submission/52626249).
-9.  If you get a run error in a line where you shouldn't, especially `free()` related errors, that means you have undefined behavior somewhere above in your file. Compile with fsanitize debugging flags to find the problem.
+### Local setup code
+
+To exclude some code from executing in online judge (C++), you can use this:
+
+    #ifndef ONLINE_JUDGE
+    //code that should not execute in ONLINE JUDGE
+    #else
+    //code that should execute in ONLINE JUDGE
+    #endif
+
+### Uninitialized values inside struct array
+
+Note that values of arrays inside struct are not automatically initialized. So, `(struct)->array[i]` is null. Hence, need to manually iniitialize each index of an array property. Else you get run error, [like here](https://codeforces.com/contest/514/submission/52626249).
+
+### Nonsensical output/Unexpected runtime error
+
+If you get a run error in a line where you shouldn't, especially `free()` related errors, or you are seeing some nonsensical outputs, that means you have **undefined behavior** somewhere above in your file.
+
+Compile with fsanitize debugging flags to find the problem. See the section on compilation.
+
 10. **Instead of a binary search tree, if all insertions before all the queries, then please use 1d vector with binary search.**
 11. If stuck and have a brute force, perform complexity analysis and it might even pass. (255C as well as 1229C)
 12. If you have range queries and point updates, but the updates are offline (all queries occur after all updates), then consider using the "library question" approach (checkposts waala).
 
-## Causes for TLE
-
-1. Sorting a very large vector of pairs using a custom comparator function (`[](){}`) can cause TLE. [Example link](https://codeforces.com/contest/605/submission/54273199)
-2. Using `long long` instead of `int` can cause TLE. ![Example](https://i.imgur.com/im2FJPK.png)
-3. Using `pow(a, b)` is much much slower than using `1ll << power`, which is slightly slower than storing successive powers in a cumulative array, when used in a loop. (see submissions on D - https://codeforces.com/contest/1220/my)
-4. Using a set of strings (`set<string>`) can give TLE in a lot of cases. Perform lots of optimizations in the code if you plan to use such a set. For example, an n^2 loop should be done in $n^2/2$ instead. Try to reduce number of other things being used, basically, think for two minutes and make it as optimized as possible. There is a very high possibility you will get TLE if you do not do this ([TLE](https://codeforces.com/contest/1287/submission/68256873) and [AC](https://codeforces.com/contest/1287/submission/68280463)). 
-   1. Another example for $n^2$ TLE is [270807A](https://codeforces.com/gym/270807/submission/72146495).
-5. Using binary search with sets results in a log^2n factor and can lead to TLE. [Example submission](https://codeforces.com/contest/514/submission/79273659). Use **two pointer** approach to AC such questions wherever possible ([submission](https://codeforces.com/contest/514/submission/79274584))
-
 ## Causes for MLE
 
 1. A 10^7 vector of long long ints takes roughly 400MB. So, consider using int instead, which takes 200MB.
+2. Inserting strings into set may give memory limit even if you use `int` and $n^2$ complexity is permitted. ([link](https://codeforces.com/contest/271/submission/62205689))
 
 ## IO
 
 1. When using `scanf`, always use `%llu` or `%lld` to take integer inputs. On codeforces custom invocation you can check that using `%lf` or `%f` to take integer inputs assigns it a value 0.000000.
-2. Prefer `cin`/`cout` as far as possible over `scanf`/`printf`. With sync with stdio disabled, they're as fast as or even faster than the c analogs. Also, taking string input with cin is super easy.
-3. Do not mix `cin`/`cout` with `scanf`/`printf`/`getchar` when sync with stdio is disabled.
+2. Prefer `cin`/`cout` as far as possible over `scanf`/`printf`. With sync with stdio disabled, they're as fast as or even faster than the C analogs. Also, taking string input with cin is super easy.
+3. Do not mix `cin`/`cout` with `scanf`/`printf`/`getchar` when sync with stdio is disabled. The latter literally means `cin`/`cout` (which are part of `iostream`) will NOT be in sync with the others (which are in `cstdio`). 
+
+    For example, the following code may result in unexpected behavior:
+
+    ```cpp
+    scanf("%d", &a);
+    cin >> b;
+    cout << b;
+    printf("%d", a);
+    ```
 
 ## Using vectors
 
-2.  Use `emplace_back` instead of `push_back` for [marked performance improvement](https://stackoverflow.com/questions/26860749/efficiency-of-c11-push-back-with-stdmove-versus-emplace-back-for-already). The bug (mainly typesafety) involved with emplace_back is not our concern in CP ([post](https://stackoverflow.com/questions/10890653/why-would-i-ever-use-push-back-instead-of-emplace-back/28435599)).
-3.  Always pass large vectors, especially large 2D vectors (think `1000x1000`), to methods using the ampersand argument format. Also, if the total number of elements exceeds `10^6`, declare them globally and convert from `lu` to possibly `int` or `long int`. Otherwise you will get MLE.
+1.  Always pass large vectors, with roughly $10^6$ elements, to methods in reference form (using the ampersand argument format).
 4.  Always initialize very large vectors outside of your main loop. For example, the time complexity of the following program is `O(n * k)`, which will TLE if n and k are both very large:
 
         for(int i = 0; i < n; i++){
@@ -125,27 +146,31 @@ Avoid returning more than a pair in query function of segment tree. Even sorting
 ## Integers
 
 1. Maximizing greedy consumptions occurs best in greedy space, consider modular groups always. (see 1244C - number theory solution)
-2. Never print `!integer` directly in codeforces, instead of printing 0 or 1, have faced wrong answer (https://codeforces.com/contest/1010/submission/73504640), instead first assign to boolean and then apply ternary like this (https://codeforces.com/contest/1010/submission/73501156)
+2. Never print `!integer` directly in codeforces, instead of printing 0 or 1, have faced [WA](https://codeforces.com/contest/1010/submission/73504640), instead first assign to boolean and then apply ternary like this [AC](https://codeforces.com/contest/1010/submission/73501156)
 
 ## Floats
 
 1. Use epsilon when comparing floating point values, even when with ints. Do not use anything less than 1e-6 unless absolutely sure. See the problem https://codeforces.com/group/K3Zd1r0QSA/contest/102343/submission/61050721 and previous two submissions.
-2. Be careful in python when using division and modulo together. Division `/` produces float values and modulo on float values gives very incorrect results. Always use `//` if using modulo (and cast 1e10 using `int`.)
+2. Be careful in Python when using division and modulo together. Division `/` produces float values and modulo on float values gives very incorrect results. Always use `//` if using modulo (and cast 1e10 using `int`.)
 
 ## Strings
 
 1. Always check size of string before applying integer parsing functions. For example, don't pass strings of length greater than 18 to `stoull`.
-2. Use `<` or `>` when attempting lexicographical comparison. It is much better than writing a normal for loop for the same.
+2. Use `<` or `>` when attempting lexicographical comparison. It is much better than writing a normal for loop for the same. For example, `"abc" > "def"` is `false`.
 3. If $n^2$ complexity is permitted, consider using tries instead of hashing. [Hashing can give wrong answer.](https://codeforces.com/contest/271/my)
-4. Inserting strings into set will give memory limit even if you use `int` and $n^2$ complexity is permitted. ([link](https://codeforces.com/contest/271/submission/62205689))
 
 ## Math
 
 1. `std::pow` is a constant time operation. See [SO](https://stackoverflow.com/q/13418180) and [code submission](https://codeforces.com/contest/453/submission/55961090) that passes on Codeforces.
-2. Do not use `multmod` as far as possible because it can lead to time limit.
-3. For taking modulo, the following always works: `((value % MOD) + MOD) % MOD`
+2. For taking modulo, the following works for both negative or positive integers: `((value % MOD) + MOD) % MOD`. Simply using `value % MOD` produces negative remainder for negative integers and may not be desired.
 4. If mod value `= 1ll << 30`, (or any power of 2), then taking mod is not necessary as it will overflow on its own and adjust accordingly. (use unsigned int if necessary). In fact, doing `(1ll * a * b) % mod` will slow your code down.
-5. When taking sqrt of very large numbers (10\*\*18), always verify that if `(int) x = sqrt(N)`, then `x * x <= N`, because, of these things: `sqrt((ll) (1e16-1)) = 1e8` (can check it's true)
+5. Never print `pow(a,b)` directly. Always convert to integer first. This is because `pow` returns double type which prints in a different format (`1e+6.0`) compared to integers (`1000000`).
+
+### Square roots of very large numbers
+
+When taking sqrt of very large numbers (order $10^16$), you can get erroneous with `sqrt` or `log10` style functions. 
+Always verify that if `(int) x = sqrt(N)`, then `x * x <= N`, because, of these things: `sqrt((ll) (1e16-1)) = 1e8` (can check it's true)
+In similar vein, `x = log10(999999999999996448.0l)` means `x = 18`, so you can double check with `pow(10, x)` to be sure the output was incorrect.
 
 ## General algo
 
@@ -158,23 +183,26 @@ Avoid returning more than a pair in query function of segment tree. Even sorting
 
 ## Sieve
 
-1. Do not create a sieve unless you want to check the primality of a number more than once. Besides that, decide at all if you actually require the number to be prime in your code.
-   Refer to [bad solution](https://codeforces.com/contest/1076/submission/45601999), [best solution](https://codeforces.com/contest/1076/submission/45626302)
+1. Do not create a sieve unless you want to check the primality of a number more than once. Besides that, decide at all if you actually require the number to be prime in your code.  Refer to [bad solution](https://codeforces.com/contest/1076/submission/45601999), [best solution](https://codeforces.com/contest/1076/submission/45626302) In most cases you can get away with a simple square root based for loop, like so:
 
-## Codechef
-
-1. When you receive an invalid answer output from an interactive problem, you should immediately terminate your program to receive a Wrong Answer verdict; otherwise, you may receive any verdict.
-2. Don't forget to flush the output after printing each line! (`cout.flush();`)
+    ```cpp
+    for(int i = 2; 1ll * i * i <= x;){
+            if(x % i == 0){
+                x /= i;
+            } else i++;
+        }
+    }
+    ```
+    since at each step the value of $x$ reduces, in the worst case the complexity is $\sqrt{x}$ when $x$ is prime.
 
 ## Graphs
 
 1. Kosaraju's algo works better with stacks than with toposort. See [failed toposort](https://codeforces.com/contest/427/submission/55713667) and [accepted stacks](https://codeforces.com/contest/427/submission/55713974) solution.
-2. `dfs` in a 2d grid: do not use pairs to keep track of coords and a `map<pll, bool> visited`.  Instead use `vector<vb> visited(1000, vb(1000,false))` and `x,y` separated arguments to do `dfs`. This can be the difference of a time limit and AC. Apparently, using pairs to do dfs with maps for visited array can TLE on 10^6 nodes. (see problem C https://codeforces.com/contest/374/my)
-3. When there are only two paths in a grid possible (up and right OR down and right) and so on, consider using a nested for loop instead of bfs type queue to iterate over all elements in order.
+2. When there are only two paths in a grid possible (up and right OR down and right) and so on, consider using a nested for loop instead of bfs type queue to iterate over all elements in order. See, [example submission](https://codeforces.com/contest/1353/submission/80164554)
 
-# Specific kinds of problems
+## Specific kinds of problems
 
-## Problems where the complement graph is inputted
+### Problems where the complement graph is inputted
 
 1242B, 190E
 
@@ -183,33 +211,13 @@ Approaches:
 1. DFS using a set that keeps self-deleting: this TLEd on 190E so go with DSU approach
 2. DSU (I didn't understand this approach :/ explained in editorial of 1242B)
 
-## Problems with `map` giving TLE
+### Problems with `map` giving TLE
 
 Using `unordered_map` instead will usually **NOT** fix your problem. Instead, focus on reworking your logic a bit so that you can get an AC. See problem 102411M (AC https://codeforces.com/gym/102411/submission/66275452).
 Also, see https://codeforces.com/blog/entry/60737 but you probably won't ever need it.
 
-## SPOJ TIPS
+### SPOJ TIPS
 
 1. If problem says "Round answer to 6 decimal digits", it actually wants you to print exactly six decimal digits and not more! So, for your final answer, do `ans = std::round(1e6 * ans) / 1e6` and use `setprecision(6)`.
 2. SPOJ always runs on all tests first and only then gives the verdict. So, it may be possible that you see "running (12)" even though your code failed on first test itself.
 3. Python 2 is on SPOJ, and it uses `raw_input` instead of `input`.
-
-## WTF
-
-1. How to check for overflow in long long consecutive products? Why did this happen? https://codeforces.com/group/K3Zd1r0QSA/contest/101612/submission/60599572 -_-
-                                
-                ```
-                bool of = false;
-                ll x = 1;
-
-                for (auto mult : prods) {
-                    if (x > (ld)1e18 / mult) {
-                        of = true;
-                        break;
-                    }
-                    x *= mult;
-                }
-                ```
-
-2. `log10(999999999999996448.0l)` is `18` :(
-3. Never output `pow(a,b)` directly. Always convert to `ll` before doing `cout`.
