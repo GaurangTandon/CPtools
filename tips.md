@@ -55,21 +55,7 @@ Avoid returning more than a pair in query function of segment tree. Even sorting
 
 ## General coding
 
-1.  Decide upon some standard variable names. Like, `a` for arrays, prefix sum array as `sum`, `s` for strings, etc. Avoid longer names. At max, competitive code has only six distinct variables in any scope, so there can't/shouldn't be much confusion.
-2.  Use vectors if you're using C++. There's no reason to not use vectors when they are available. They are not only [as fast as plain arrays](https://stackoverflow.com/questions/26189531/how-is-stdvector-faster-than-a-plain-array), but are also dynamically sized with constant access time. They also allow sorting operations, any index insertion/deletion, etc. on them.
-3.  It is recommended to avoid writing functions that return more than one value, as it leads to harder debugging. However, this may sometimes be desirable, for example to return index of first occurrence of string that begins with "a", and the string itself. So, you can use `std::tie` and `std::tuple` for that.
-
-        tuple<int, string> f(params) {
-            // do some searching
-            return {index, str};
-        }
-
-        int main(void) {
-            int idx; string found;
-            tie(idx, found) = f(params);
-        }
-
-4.  **Use of auto-keyword:** Instead of `set<pair<int, pair<int, int>>>::iterator` you can simply do `auto it = s.begin()`
+1.  **Use of auto-keyword:** Instead of `set<pair<int, pair<int, int>>>::iterator` you can simply do `auto it = s.begin()`, similarly, instead of `vector<int> row = grid[index]` you can simply do `auto row = grid[index]`
 5.  To exclude some code from executing in online judge (C++), you can use this:
 
         #ifndef ONLINE_JUDGE
