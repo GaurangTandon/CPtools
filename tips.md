@@ -165,6 +165,7 @@ Compile with fsanitize debugging flags to find the problem. See the section on c
 2. For taking modulo, the following works for both negative or positive integers: `((value % MOD) + MOD) % MOD`. Simply using `value % MOD` produces negative remainder for negative integers and may not be desired.
 4. If mod value `= 1ll << 30`, (or any power of 2), then taking mod is not necessary as it will overflow on its own and adjust accordingly. (use unsigned int if necessary). In fact, doing `(1ll * a * b) % mod` will slow your code down.
 5. Never print `pow(a,b)` directly. Always convert to integer first. This is because `pow` returns double type which prints in a different format (`1e+6.0`) compared to integers (`1000000`).
+6. Do not use `log10(num) / log10(base) + 1` to find number of digits in number in base b. It can give a wrong answer, use the trivial while loop instead. Example [WA](https://codeforces.com/contest/49/submission/80280102), [AC](https://codeforces.com/contest/49/submission/80280370)
 
 ### Square roots of very large numbers
 
