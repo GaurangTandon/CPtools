@@ -1,8 +1,0 @@
-dist: xenial
-
-before_script:
-    - cd test
-
-script:
-    - ./check_title.sh
-    - ./check_md_links.sh

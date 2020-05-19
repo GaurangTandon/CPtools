@@ -40,8 +40,8 @@ You might also want to change the default keybinding from Ctrl+Alt+N to just F8,
 Copy the following to the file `~/.vim/ftplugin/cpp.vim`:
 
 ```
-nnoremap <F4> :w<CR>:vs \| te g++ % && ./a.out < in<CR>i
-inoremap <F4> <esc>:w<CR>:vs \| te g++ % && ./a.out < in<CR>i
+nnoremap <F4> :w<CR>:vs \| te g++ "%" && ./a.out < in<CR>i
+inoremap <F4> <esc>:w<CR>:vs \| te g++ "%" && ./a.out < in<CR>i
 ```
 
 This will allow you to press F4 key to compile the currently open C++ file, and run it on an input file named `in`. Here's a short explanation of how this works:
