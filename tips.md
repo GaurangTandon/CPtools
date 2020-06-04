@@ -201,6 +201,12 @@ In similar vein, `x = log10(999999999999996448.0l)` means `x = 18`, so you can d
 1. Kosaraju's algo works better with stacks than with toposort. See [failed toposort](https://codeforces.com/contest/427/submission/55713667) and [accepted stacks](https://codeforces.com/contest/427/submission/55713974) solution.
 2. When there are only two paths in a grid possible (up and right OR down and right) and so on, consider using a nested for loop instead of bfs type queue to iterate over all elements in order. See, [example submission](https://codeforces.com/contest/1353/submission/80164554)
 
+## Gaussian elimination
+
+It has two techniques: full pivoting and partial pivoting. It is known that full pivoting is slower, although guarantees stability in output (see [discussion here](https://codeforces.com/blog/entry/65787)). Stability means that the error term in the output will not grow too large as compared to correct output. There exists certain matrices - with negative terms in their lower triangle - that fail stability when computed with partial pivoting.
+
+[Blog](https://codeforces.com/blog/entry/60003) on using gaussian to solve for probabilities and xor values.
+
 ## Randomization tasks
 
 Use this line: `mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());`. Have previously got WA when using `rand()` or `(1ll * rand() * rand() % n + n) % n + 1` ([WA](https://codeforces.com/contest/843/submission/81008035), [AC](https://codeforces.com/contest/843/submission/81008530))
