@@ -13,7 +13,7 @@ To be fair, in general it is far easier for you to "be the judge yourself" and s
 ### Flushing methods
 
 1. `cout.flush()` in C++
-2. <Add more>
+2. `fflush(stdout)` in C.
 
 ## Compilation tricks
 
