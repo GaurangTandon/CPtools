@@ -196,6 +196,11 @@ In similar vein, `x = log10(999999999999996448.0l)` means `x = 18`, so you can d
     ```
     since at each step the value of $x$ reduces, in the worst case the complexity is $\sqrt{x}$ when $x$ is prime.
 
+## Flows
+
+1. Practically, all flow algos (dinics, push relabel, or even edmonds-karp) have complexity `= min( (V + E) * mf, ...)` (mf = max flow).
+2. In practice, even if N=800 and M=1e4, Dinics or even EK might work, so do not hesitate in coding them up. (The problem might have weak testcases, or see the previous point, it is possible that their max flow bound is lower)
+
 ## Graphs
 
 1. Kosaraju's algo works better with stacks than with toposort. See [failed toposort](https://codeforces.com/contest/427/submission/55713667) and [accepted stacks](https://codeforces.com/contest/427/submission/55713974) solution.
