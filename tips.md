@@ -200,6 +200,7 @@ In similar vein, `x = log10(999999999999996448.0l)` means `x = 18`, so you can d
 
 1. Practically, all flow algos (dinics, push relabel, or even edmonds-karp) have complexity `= min( (V + E) * mf, ...)` (mf = max flow).
 2. In practice, even if N=800 and M=1e4, Dinics or even EK might work, so do not hesitate in coding them up. (The problem might have weak testcases, or see the previous point, it is possible that their max flow bound is lower)
+3. CLRS question 26.2-13 is nice. "Given graph G, propose modification so that among all current mincuts, in the new graph G', any mincut will also have least number of edges". [Solution](https://www.slader.com/discussion/question/suppose-that-you-wish-to-find-among-all-minimum-cuts-in-a-flow-network-g-with/). Short answer: scale all capacities by 2|E| and add one.
 
 ## Graphs
 
