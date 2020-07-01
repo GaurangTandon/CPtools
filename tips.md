@@ -53,6 +53,10 @@ Converting a digit segment tree into actual parts (`int tree[len][dig_count]`) r
 
 Avoid returning more than a pair in query function of segment tree. Even sorting a vector of length 4 can result in tle! ([tl code](https://codeforces.com/contest/1217/submission/74391601), [ac](https://codeforces.com/contest/1217/submission/74392081))
 
+### `cerr`
+
+Even a very innocent looking `cerr` can cause your code to TLE. Here is [AC](https://codeforces.com/contest/343/submission/85612330) and [TLE](https://codeforces.com/contest/343/submission/85612428) code. The only difference in TLE code is that I'm printing two integers to `cerr`. So, always remove all your `cerr` statements.
+
 ### Other miscellaneous problems
 
 1. Sorting a very large vector of pairs using a custom comparator function can cause TLE. [Example link](https://codeforces.com/contest/605/submission/54273199)
