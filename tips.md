@@ -95,6 +95,13 @@ Compile with fsanitize debugging flags to find the problem. See the section on c
 11. If stuck and have a brute force, perform complexity analysis and it might even pass. (255C as well as 1229C)
 12. If you have range queries and point updates, but the updates are offline (all queries occur after all updates), then consider using the "library question" approach (checkposts waala).
 
+## Causes for RE
+
+1. Accessing an element out of range or an invalidated iterator.
+2. Popping/accessing elements from empty container.
+3. Miswritten sorting function (should return true iff a < b)
+4. `lower_bound` called on a container which was sorted with a different criterion. For example, container is sorted by `PII.second` but your `lower_bound` comparator searches by `PII.first`.
+
 ## Causes for MLE
 
 1. A 10^7 vector of long long ints takes roughly 400MB. So, consider using int instead, which takes 200MB.
