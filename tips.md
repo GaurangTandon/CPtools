@@ -150,6 +150,27 @@ Compile with fsanitize debugging flags to find the problem. See the section on c
 
     The same problem plagues array initialization (`int arr[k] = {0};`) and cannot be avoided by doing `memset(arr, k, 0);` as the latter also takes `O(k)`.
 
+## `memset`s
+
+`memset` is a string function, so it fills values **byte-by-byte**. It won't work for integer arrays! (unless you set to 0) So, a simple code like following:
+
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    const int sz = 1;
+    int nums[sz];
+    memset(nums, 1, sizeof(nums));
+    cout << nums[sz - 1] << endl;
+    return 0;
+}
+```
+
+produces `16843009`, which is `0x01010101`, basically, the single byte value `0x01` copied four times over. Note that this is the same in both `memset` from C and from C++, they both are string functions only.
+
+**Fix:** use `std::fill(dest, dest + n, val)`.
+
 ## Multisets
 
 1. `multiset.erase(value)` erases all copies of `value` in `multiset`. To delete just one value use `multiset.erase(multiset.find(value))` (but first ensure the value exists in multiset).
