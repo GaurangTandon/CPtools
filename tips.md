@@ -150,6 +150,8 @@ Compile with fsanitize debugging flags to find the problem. See the section on c
 
     The same problem plagues array initialization (`int arr[k] = {0};`) and cannot be avoided by doing `memset(arr, k, 0);` as the latter also takes `O(k)`.
 
+3. `vector<vector<int>> v(n,vector<int>(2))` requires 4x more memory than `vector<pair<int,int>> v(n)`. See [testing script](https://gist.github.com/anurudhp/21268c833a74fd2bbc3ee0a9eb6858b9). This can cost you a [TLE](https://www.codechef.com/viewsolution/49424394) vs [AC](https://www.codechef.com/viewsolution/49425122). [Discord thread](https://discord.com/channels/710822875443101706/727945425331683450/872375953161064468)
+
 ## `memset`s
 
 `memset` is a string function, so it fills values **byte-by-byte**. It won't work for integer arrays! (unless you set to 0) So, a simple code like following:
@@ -265,6 +267,10 @@ Approaches:
 
 Using `unordered_map` instead will usually **NOT** fix your problem. Instead, focus on reworking your logic a bit so that you can get an AC. See problem 102411M (AC https://codeforces.com/gym/102411/submission/66275452).
 Also, see https://codeforces.com/blog/entry/60737 but you probably won't ever need it.
+
+### Ordered set
+
+Multiset with ordered set pbds does not work even if you set comparator to `less_equal` (specifically, delete or find don't work). See Anurudh's explanation [here](https://discord.com/channels/710822875443101706/727945425331683450/875069423990476871)
 
 ### SPOJ TIPS
 
